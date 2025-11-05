@@ -1,0 +1,18 @@
+# Lambda deployment artifacts
+lambda-functions/*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# AWS
+response.json
+
+# OS
+.DS_Store
+
+# Logs
+*.log

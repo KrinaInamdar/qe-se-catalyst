@@ -1,0 +1,173 @@
+#!/bin/bash
+
+#===============================================================================
+# Elastic Beanstalk + S3 + CloudFront Cleanup Script
+# This script removes all resources created by the deployment script
+#===============================================================================
+
+echo "======================================================================"
+echo "AWS Demo Cleanup - Elastic Beanstalk + S3 + CloudFront"
+echo "======================================================================"
+echo ""
+
+# Load configuration
+if [ -f ".eb-demo-config" ]; then
+    source .eb-demo-config
+    echo "✓ Loaded configuration from .eb-demo-config"
+else
+    echo "⚠ No configuration file found. Please provide details manually:"
+    read -p "Enter Application Name [demo-webapp]: " APP_NAME
+    APP_NAME=${APP_NAME:-demo-webapp}
+    read -p "Enter Environment Name [demo-webapp-env]: " ENV_NAME
+    ENV_NAME=${ENV_NAME:-demo-webapp-env}
+    read -p "Enter S3 Bucket Name: " S3_BUCKET
+    read -p "Enter CloudFront Distribution ID (optional): " CLOUDFRONT_ID
+fi
+
+echo ""
+echo "⚠️  This will delete ALL demo resources:"
+echo "   - Elastic Beanstalk environment: $ENV_NAME"
+echo "   - Elastic Beanstalk application: $APP_NAME"
+echo "   - S3 bucket: $S3_BUCKET"
+if [ -n "$CLOUDFRONT_ID" ]; then
+    echo "   - CloudFront distribution: $CLOUDFRONT_ID"
+fi
+echo ""
+read -p "Are you sure you want to continue? (yes/no): " CONFIRM
+
+if [ "$CONFIRM" != "yes" ]; then
+    echo "Cleanup cancelled."
+    exit 0
+fi
+
+echo ""
+echo "Starting cleanup..."
+echo "======================================================================"
+
+# Step 1: Terminate Elastic Beanstalk environment
+echo ""
+echo "Step 1: Terminating Elastic Beanstalk environment..."
+echo "----------------------------------------------------------------------"
+
+if aws elasticbeanstalk describe-environments \
+    --application-name $APP_NAME \
+    --environment-names $ENV_NAME \
+    --query 'Environments[0].EnvironmentName' \
+    --output text 2>/dev/null | grep -q "$ENV_NAME"; then
+    
+    echo "Terminating environment: $ENV_NAME"
+    echo "This may take 3-5 minutes..."
+    
+    eb terminate $ENV_NAME --force 2>&1 | grep -v "WARNING" || \
+    aws elasticbeanstalk terminate-environment \
+        --environment-name $ENV_NAME \
+        2>/dev/null || echo "  Environment termination initiated"
+    
+    # Wait for termination
+    echo "Waiting for environment to terminate..."
+    sleep 30
+    
+    echo "✓ Environment termination initiated"
+else
+    echo "⚠ Environment not found"
+fi
+
+# Step 2: Delete Elastic Beanstalk application
+echo ""
+echo "Step 2: Deleting Elastic Beanstalk application..."
+echo "----------------------------------------------------------------------"
+
+if aws elasticbeanstalk describe-applications \
+    --application-names $APP_NAME \
+    --query 'Applications[0].ApplicationName' \
+    --output text 2>/dev/null | grep -q "$APP_NAME"; then
+    
+    aws elasticbeanstalk delete-application \
+        --application-name $APP_NAME \
+        --terminate-env-by-force \
+        2>/dev/null && echo "✓ Application deleted" || echo "⚠ Application deletion pending"
+else
+    echo "⚠ Application not found"
+fi
+
+# Step 3: Empty and delete S3 bucket
+echo ""
+echo "Step 3: Deleting S3 bucket..."
+echo "----------------------------------------------------------------------"
+
+if aws s3 ls s3://$S3_BUCKET 2>/dev/null; then
+    echo "Emptying bucket..."
+    aws s3 rm s3://$S3_BUCKET --recursive 2>/dev/null || true
+    
+    echo "Deleting bucket..."
+    aws s3 rb s3://$S3_BUCKET --force 2>/dev/null && \
+        echo "✓ S3 bucket deleted" || \
+        echo "⚠ S3 bucket deletion failed (may need manual cleanup)"
+else
+    echo "⚠ S3 bucket not found"
+fi
+
+# Step 4: Delete CloudFront distribution
+if [ -n "$CLOUDFRONT_ID" ]; then
+    echo ""
+    echo "Step 4: Disabling CloudFront distribution..."
+    echo "----------------------------------------------------------------------"
+    
+    # Get current config
+    aws cloudfront get-distribution-config \
+        --id $CLOUDFRONT_ID \
+        --query 'DistributionConfig' \
+        --output json > /tmp/cf-config.json 2>/dev/null || true
+    
+    if [ -f "/tmp/cf-config.json" ]; then
+        # Disable distribution
+        ETAG=$(aws cloudfront get-distribution-config \
+            --id $CLOUDFRONT_ID \
+            --query 'ETag' \
+            --output text 2>/dev/null)
+        
+        # Modify config to disable
+        jq '.Enabled = false' /tmp/cf-config.json > /tmp/cf-config-disabled.json
+        
+        aws cloudfront update-distribution \
+            --id $CLOUDFRONT_ID \
+            --distribution-config file:///tmp/cf-config-disabled.json \
+            --if-match "$ETAG" \
+            2>/dev/null && echo "✓ CloudFront distribution disabled" || echo "⚠ CloudFront update failed"
+        
+        rm /tmp/cf-config.json /tmp/cf-config-disabled.json 2>/dev/null || true
+        
+        echo ""
+        echo "Note: CloudFront distribution is now disabled."
+        echo "      It will take 15-20 minutes before it can be deleted."
+        echo "      Run this command later to complete deletion:"
+        echo "      aws cloudfront delete-distribution --id $CLOUDFRONT_ID --if-match \$(aws cloudfront get-distribution --id $CLOUDFRONT_ID --query 'ETag' --output text)"
+    else
+        echo "⚠ CloudFront distribution not found"
+    fi
+fi
+
+# Step 5: Clean up local files
+echo ""
+echo "Step 5: Cleaning up local files..."
+echo "----------------------------------------------------------------------"
+
+rm -f .eb-demo-config 2>/dev/null && echo "✓ Removed .eb-demo-config" || true
+rm -f app-*.zip 2>/dev/null && echo "✓ Removed application bundles" || true
+rm -rf .elasticbeanstalk/ 2>/dev/null && echo "✓ Removed .elasticbeanstalk directory" || true
+
+echo ""
+echo "======================================================================"
+echo "✅ Cleanup Complete!"
+echo "======================================================================"
+echo ""
+echo "All resources have been removed or scheduled for deletion."
+echo ""
+if [ -n "$CLOUDFRONT_ID" ]; then
+    echo "⚠️  CloudFront Note:"
+    echo "   The CloudFront distribution has been disabled but not deleted."
+    echo "   Wait 15-20 minutes, then run:"
+    echo "   aws cloudfront delete-distribution --id $CLOUDFRONT_ID --if-match \$(aws cloudfront get-distribution --id $CLOUDFRONT_ID --query 'ETag' --output text)"
+    echo ""
+fi
+echo "======================================================================"

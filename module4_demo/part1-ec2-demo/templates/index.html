@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Demo - Elastic Beanstalk + S3 + CloudFront</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF9900 0%, #232F3E 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 { color: #232F3E; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 18px; margin-bottom: 20px; }
+        .services { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .service-badge {
+            background: #FF9900;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .card h2 { color: #232F3E; margin-bottom: 15px; }
+        button {
+            background: #232F3E;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:hover { background: #37475A; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AWS Cloud Services Demo</h1>
+            <p class="subtitle">Elastic Beanstalk + S3 + CloudFront</p>
+            <div class="services">
+                <span class="service-badge">🖥️ Elastic Beanstalk</span>
+                <span class="service-badge">🗄️ Amazon S3</span>
+                <span class="service-badge">🌐 CloudFront</span>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Instance Information</h2>
+            <div id="info">Loading...</div>
+            <button onclick="loadInfo()">Refresh</button>
+        </div>
+    </div>
+    <script>
+        function loadInfo() {
+            fetch('/api/info')
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('info').innerHTML = 
+                        '<p>Hostname: ' + d.hostname + '</p>' +
+                        '<p>IP: ' + d.local_ip + '</p>' +
+                        '<p>S3 Bucket: ' + d.aws_services.s3_bucket + '</p>';
+                });
+        }
+        loadInfo();
+    </script>
+</body>
+</html>
