@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #===============================================================================
-# Elastic Beanstalk + S3 + CloudFront Cleanup Script
+# Elastic Beanstalk + S3 Cleanup Script
 # This script removes all resources created by the deployment script
 #===============================================================================
 
 echo "======================================================================"
-echo "AWS Demo Cleanup - Elastic Beanstalk + S3 + CloudFront"
+echo "AWS Demo Cleanup - Elastic Beanstalk + S3"
 echo "======================================================================"
 echo ""
 
@@ -21,7 +21,6 @@ else
     read -p "Enter Environment Name [demo-webapp-env]: " ENV_NAME
     ENV_NAME=${ENV_NAME:-demo-webapp-env}
     read -p "Enter S3 Bucket Name: " S3_BUCKET
-    read -p "Enter CloudFront Distribution ID (optional): " CLOUDFRONT_ID
 fi
 
 echo ""
@@ -29,9 +28,6 @@ echo "⚠️  This will delete ALL demo resources:"
 echo "   - Elastic Beanstalk environment: $ENV_NAME"
 echo "   - Elastic Beanstalk application: $APP_NAME"
 echo "   - S3 bucket: $S3_BUCKET"
-if [ -n "$CLOUDFRONT_ID" ]; then
-    echo "   - CloudFront distribution: $CLOUDFRONT_ID"
-fi
 echo ""
 read -p "Are you sure you want to continue? (yes/no): " CONFIRM
 
@@ -107,49 +103,9 @@ else
     echo "⚠ S3 bucket not found"
 fi
 
-# Step 4: Delete CloudFront distribution
-if [ -n "$CLOUDFRONT_ID" ]; then
-    echo ""
-    echo "Step 4: Disabling CloudFront distribution..."
-    echo "----------------------------------------------------------------------"
-    
-    # Get current config
-    aws cloudfront get-distribution-config \
-        --id $CLOUDFRONT_ID \
-        --query 'DistributionConfig' \
-        --output json > /tmp/cf-config.json 2>/dev/null || true
-    
-    if [ -f "/tmp/cf-config.json" ]; then
-        # Disable distribution
-        ETAG=$(aws cloudfront get-distribution-config \
-            --id $CLOUDFRONT_ID \
-            --query 'ETag' \
-            --output text 2>/dev/null)
-        
-        # Modify config to disable
-        jq '.Enabled = false' /tmp/cf-config.json > /tmp/cf-config-disabled.json
-        
-        aws cloudfront update-distribution \
-            --id $CLOUDFRONT_ID \
-            --distribution-config file:///tmp/cf-config-disabled.json \
-            --if-match "$ETAG" \
-            2>/dev/null && echo "✓ CloudFront distribution disabled" || echo "⚠ CloudFront update failed"
-        
-        rm /tmp/cf-config.json /tmp/cf-config-disabled.json 2>/dev/null || true
-        
-        echo ""
-        echo "Note: CloudFront distribution is now disabled."
-        echo "      It will take 15-20 minutes before it can be deleted."
-        echo "      Run this command later to complete deletion:"
-        echo "      aws cloudfront delete-distribution --id $CLOUDFRONT_ID --if-match \$(aws cloudfront get-distribution --id $CLOUDFRONT_ID --query 'ETag' --output text)"
-    else
-        echo "⚠ CloudFront distribution not found"
-    fi
-fi
-
-# Step 5: Clean up local files
+# Step 4: Clean up local files
 echo ""
-echo "Step 5: Cleaning up local files..."
+echo "Step 4: Cleaning up local files..."
 echo "----------------------------------------------------------------------"
 
 rm -f .eb-demo-config 2>/dev/null && echo "✓ Removed .eb-demo-config" || true
@@ -163,11 +119,4 @@ echo "======================================================================"
 echo ""
 echo "All resources have been removed or scheduled for deletion."
 echo ""
-if [ -n "$CLOUDFRONT_ID" ]; then
-    echo "⚠️  CloudFront Note:"
-    echo "   The CloudFront distribution has been disabled but not deleted."
-    echo "   Wait 15-20 minutes, then run:"
-    echo "   aws cloudfront delete-distribution --id $CLOUDFRONT_ID --if-match \$(aws cloudfront get-distribution --id $CLOUDFRONT_ID --query 'ETag' --output text)"
-    echo ""
-fi
 echo "======================================================================"

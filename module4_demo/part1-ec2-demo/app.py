@@ -1,6 +1,6 @@
 """
 Enhanced Flask Web Application for AWS Demo
-Demonstrates IaaS/PaaS with Elastic Beanstalk, S3, and CloudFront
+Demonstrates IaaS/PaaS with Elastic Beanstalk and S3
 """
 
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
@@ -16,7 +16,6 @@ app.secret_key = os.environ.get('SECRET_KEY', 'demo-secret-key-change-in-product
 
 # AWS Configuration
 S3_BUCKET = os.environ.get('S3_BUCKET_NAME', 'demo-app-bucket')
-CLOUDFRONT_DOMAIN = os.environ.get('CLOUDFRONT_DOMAIN', '')
 AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
 
 # Initialize AWS clients
@@ -34,9 +33,7 @@ def allowed_file(filename):
 @app.route('/')
 def home():
     """Home page showing instance information and upload form"""
-    return render_template('index.html', 
-                          cloudfront_domain=CLOUDFRONT_DOMAIN,
-                          s3_bucket=S3_BUCKET)
+    return render_template('index.html', s3_bucket=S3_BUCKET)
 
 @app.route('/api/info')
 def instance_info():
@@ -55,7 +52,18 @@ def instance_info():
             response = s3_client.list_objects_v2(Bucket=S3_BUCKET, MaxKeys=10)
             if 'Contents' in response:
                 for obj in response['Contents']:
-                    file_url = f"https://{CLOUDFRONT_DOMAIN}/{obj['Key']}" if CLOUDFRONT_DOMAIN else f"https://{S3_BUCKET}.s3.amazonaws.com/{obj['Key']}"
+                    # Generate pre-signed URL for PRIVATE S3 buckets (security compliance)
+                    # Pre-signed URLs expire after 1 hour
+                    try:
+                        file_url = s3_client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': S3_BUCKET, 'Key': obj['Key']},
+                            ExpiresIn=3600  # 1 hour
+                        )
+                    except Exception as e:
+                        print(f"Error generating pre-signed URL: {e}")
+                        file_url = "#"
+                    
                     uploaded_files.append({
                         'name': obj['Key'],
                         'size': obj['Size'],
@@ -69,13 +77,11 @@ def instance_info():
         'hostname': hostname,
         'local_ip': local_ip,
         'timestamp': datetime.now().isoformat(),
-        'message': 'Running on AWS Elastic Beanstalk with S3 and CloudFront',
+        'message': 'Running on AWS Elastic Beanstalk with S3',
         'aws_services': {
             'compute': 'AWS Elastic Beanstalk',
             'storage': 'Amazon S3',
-            'cdn': 'Amazon CloudFront',
-            's3_bucket': S3_BUCKET,
-            'cloudfront_enabled': bool(CLOUDFRONT_DOMAIN)
+            's3_bucket': S3_BUCKET
         },
         'uploaded_files': uploaded_files
     }
@@ -108,8 +114,16 @@ def upload_file():
                     ExtraArgs={'ContentType': file.content_type}
                 )
                 
-                file_url = f"https://{CLOUDFRONT_DOMAIN}/{unique_filename}" if CLOUDFRONT_DOMAIN else f"https://{S3_BUCKET}.s3.amazonaws.com/{unique_filename}"
-                flash(f'File uploaded successfully! URL: {file_url}')
+                # Generate pre-signed URL for PRIVATE S3 buckets (security compliance)
+                try:
+                    file_url = s3_client.generate_presigned_url(
+                        'get_object',
+                        Params={'Bucket': S3_BUCKET, 'Key': unique_filename},
+                        ExpiresIn=3600  # 1 hour
+                    )
+                    flash(f'✅ File uploaded successfully! (Pre-signed URL expires in 1 hour)')
+                except Exception as e:
+                    flash(f'File uploaded but could not generate URL: {str(e)}')
             else:
                 flash('S3 client not available')
         except Exception as e:
@@ -125,8 +139,7 @@ def health():
     return jsonify({
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
-        's3_configured': s3_client is not None,
-        'cloudfront_configured': bool(CLOUDFRONT_DOMAIN)
+        's3_configured': s3_client is not None
     })
 
 @app.route('/files')
@@ -138,7 +151,17 @@ def list_files():
             response = s3_client.list_objects_v2(Bucket=S3_BUCKET)
             if 'Contents' in response:
                 for obj in response['Contents']:
-                    file_url = f"https://{CLOUDFRONT_DOMAIN}/{obj['Key']}" if CLOUDFRONT_DOMAIN else f"https://{S3_BUCKET}.s3.amazonaws.com/{obj['Key']}"
+                    # Generate pre-signed URL for PRIVATE S3 buckets
+                    try:
+                        file_url = s3_client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': S3_BUCKET, 'Key': obj['Key']},
+                            ExpiresIn=3600  # 1 hour
+                        )
+                    except Exception as e:
+                        print(f"Error generating pre-signed URL: {e}")
+                        file_url = "#"
+                    
                     files.append({
                         'name': obj['Key'],
                         'size': obj['Size'],

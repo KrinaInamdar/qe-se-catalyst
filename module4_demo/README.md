@@ -1,5 +1,25 @@
 # AWS Cloud Computing Demo - Complete Guide
 
+## 🔒 SECURITY COMPLIANCE NOTICE
+
+**⚠️ REQUIRED READING: This demo has been updated to comply with Slalom AWS Innovation Labs security policies.**
+
+**See [SECURITY_COMPLIANCE.md](./SECURITY_COMPLIANCE.md) and [SECURITY_FIXES_SUMMARY.md](./SECURITY_FIXES_SUMMARY.md) for:**
+- InfoSec policy compliance details
+- S3 bucket security (PRIVATE only, no public access)
+- Security group restrictions (NO 0.0.0.0/0 allowed)
+- Resource lifecycle requirements (EC2 < 2 weeks)
+- Approved instance types (t3.micro)
+
+**Key Security Features:**
+- ✅ S3 buckets are PRIVATE (IAM role access only)
+- ✅ Security groups restricted to YOUR IP (auto-detected)
+- ✅ Uses approved instance types from InfoSec whitelist
+- ✅ No access keys or local IAM users
+- ⚠️ Resources MUST be cleaned up within 2 weeks
+
+---
+
 ## 🎯 Overview
 
 This repository contains a comprehensive 20-minute demonstration of AWS cloud computing fundamentals, focusing on:
@@ -13,12 +33,12 @@ Perfect for presentations, workshops, and educational purposes.
 
 ## 📋 What's Included
 
-### Part 1: Elastic Beanstalk Web Application (IaaS/PaaS Hybrid)
+### Part 1: Elastic Beanstalk Web Application (IaaS/PaaS Hybrid) 🔒
 - Flask web application with file upload
+- **SECURITY: S3 buckets are PRIVATE** (IAM role access only)
+- **SECURITY: Restricted to YOUR IP** (no public access)
 - Automated Elastic Beanstalk deployment
-- S3 bucket for file storage
-- Optional CloudFront CDN integration
-- Public-facing web interface
+- S3 integration with pre-signed URLs
 
 ### Part 2: Serverless Architecture (PaaS)
 - Three Lambda functions demonstrating event-driven architecture
@@ -27,6 +47,8 @@ Perfect for presentations, workshops, and educational purposes.
 - Complete serverless workflow
 
 ### Documentation
+- **SECURITY_COMPLIANCE.md** - ⚠️ REQUIRED: InfoSec policies and compliance
+- **SECURITY_FIXES_SUMMARY.md** - Security modifications and testing
 - **PRESENTATION_SCRIPT.md** - Detailed 20-minute presentation script with timing
 - **QUICK_REFERENCE.md** - Quick commands and troubleshooting guide
 - **PRE_DEMO_SETUP.md** - Complete setup instructions
@@ -39,8 +61,9 @@ Perfect for presentations, workshops, and educational purposes.
 ### Prerequisites
 - AWS Account with appropriate permissions
 - AWS CLI installed and configured
-- SSH key pair named `demo-key` in AWS
+- **NO SSH keys needed** (using Elastic Beanstalk managed instances)
 - macOS/Linux environment (or WSL on Windows)
+- **REQUIRED:** `aws-azure-login` for Slalom AWS Innovation Labs authentication
 
 ### ⚠️ Authentication Setup (For Federated/Azure AD Users)
 
@@ -193,20 +216,18 @@ After this demo, participants will understand:
 
 ### Expected Demo Costs
 - **Elastic Beanstalk**: Free (pay for underlying resources)
-- **EC2 t2.micro**: $0.01/hour (Free Tier eligible)
+- **EC2 t3.micro**: $0.01/hour (Free Tier eligible)
 - **S3 Storage**: < $0.01 for demo files
-- **CloudFront**: Free Tier covers demo usage
 - **Lambda**: $0.00 (within Free Tier)
 - **SNS**: $0.00 (first 1000 publishes free)
 - **SQS**: $0.00 (first 1M requests free)
 
-**Total Demo Cost**: < $0.10 if cleaned up within an hour
+**Total Demo Cost**: < $0.05 if cleaned up within an hour
 
 ### AWS Free Tier
 - Elastic Beanstalk: Free (no additional charge)
-- EC2: 750 hours/month (t2.micro)
+- EC2: 750 hours/month (t3.micro)
 - S3: 5GB storage, 20,000 GET requests, 2,000 PUT requests
-- CloudFront: 50GB data transfer out, 2,000,000 HTTP/HTTPS requests
 - Lambda: 1M requests/month
 - SNS: 1,000 publishes/month
 - SQS: 1M requests/month
@@ -347,7 +368,6 @@ For complete troubleshooting, see `QUICK_REFERENCE.md`.
 ### AWS Documentation
 - [Elastic Beanstalk Developer Guide](https://docs.aws.amazon.com/elasticbeanstalk/)
 - [S3 User Guide](https://docs.aws.amazon.com/s3/)
-- [CloudFront Developer Guide](https://docs.aws.amazon.com/cloudfront/)
 - [Lambda Developer Guide](https://docs.aws.amazon.com/lambda/)
 - [SNS Documentation](https://docs.aws.amazon.com/sns/)
 - [SQS Documentation](https://docs.aws.amazon.com/sqs/)

@@ -1,11 +1,24 @@
-# Part 1: AWS Demo - Elastic Beanstalk + S3 + CloudFront
+# Part 1: Elastic Beanstalk Web Application Demo (IaaS/PaaS Hybrid)
 
-## 🎯 Overview
+## 🔒 SECURITY COMPLIANCE - Slalom AWS Innovation Labs
+
+**⚠️ IMPORTANT: This deployment complies with Slalom InfoSec policies:**
+
+- ✅ **S3 buckets are PRIVATE** (no public access - IAM roles only)
+- ✅ **Security groups restricted to YOUR IP** (no 0.0.0.0/0 allowed)
+- ✅ **Uses approved instance type** (t3.micro from InfoSec whitelist)
+- ✅ **IAM role-based access** (no access keys or local IAM users)
+- ⚠️ **Resources must be cleaned up within 2 WEEKS**
+
+**See [SECURITY_COMPLIANCE.md](../SECURITY_COMPLIANCE.md) for full details.**
+
+---
+
+## Overview
 
 This demo showcases AWS IaaS and PaaS capabilities by deploying a Flask web application using:
 - **AWS Elastic Beanstalk** - Platform as a Service for web app deployment
 - **Amazon S3** - Object storage for uploaded files
-- **Amazon CloudFront** - Content Delivery Network (CDN) for fast file delivery
 
 ## 🏗️ Architecture
 
@@ -14,18 +27,12 @@ This demo showcases AWS IaaS and PaaS capabilities by deploying a Flask web appl
 │                       User's Browser                         │
 └────────────────────┬────────────────────────────────────────┘
                      │
-         ┌───────────▼──────────┐
-         │  CloudFront CDN      │ (Optional)
-         │  - Edge Locations    │
-         │  - Caching           │
-         └───────────┬──────────┘
-                     │
          ┌───────────▼──────────┐         ┌───────────────┐
          │  Elastic Beanstalk   │◄────────│   S3 Bucket   │
          │  - Load Balancer     │         │  - File Storage│
-         │  - EC2 Instances     │         │  - Public Read │
-         │  - Auto Scaling      │         └───────────────┘
-         │  - Health Monitoring │
+         │  - EC2 Instances     │         │  - Private     │
+         │  - Auto Scaling      │         │  - IAM Access  │
+         │  - Health Monitoring │         └───────────────┘
          └──────────────────────┘
 ```
 
@@ -40,8 +47,7 @@ This demo showcases AWS IaaS and PaaS capabilities by deploying a Flask web appl
 
 ### AWS Services Integration
 - **Elastic Beanstalk**: Manages EC2 instances, load balancer, auto-scaling
-- **S3**: Stores uploaded files with public read access
-- **CloudFront**: (Optional) Delivers files via global CDN
+- **S3**: Stores uploaded files with private access via IAM roles
 - **IAM**: Manages permissions for EB instances to access S3
 
 ## 🚀 Quick Start
@@ -56,14 +62,13 @@ This demo showcases AWS IaaS and PaaS capabilities by deploying a Flask web appl
 ```bash
 cd part1-ec2-demo
 
-# Deploy everything (EB + S3 + CloudFront)
+# Deploy everything (EB + S3)
 ./deploy-beanstalk.sh
 ```
 
 The script will:
 1. ✅ Check prerequisites
-2. ✅ Create S3 bucket for file storage
-3. ✅ Create CloudFront distribution (optional)
+2. ✅ Create S3 bucket for file storage (PRIVATE)
 4. ✅ Package the application
 5. ✅ Initialize Elastic Beanstalk
 6. ✅ Create and deploy the environment
@@ -89,19 +94,18 @@ Open this URL in your browser to:
 1. Click "Choose File" or drag & drop a file
 2. Supported formats: PNG, JPG, GIF, PDF, TXT
 3. Click "Upload to S3"
-4. File is stored in S3 and accessible via CloudFront (if enabled)
+4. File is stored in S3 (access via pre-signed URLs)
 
 ### View Instance Info
 - Hostname of the EB instance
 - Local IP address
 - S3 bucket name
-- CloudFront status
 - Timestamp
 
 ### Browse Files
 - Lists all files in S3 bucket
 - Shows file size and upload date
-- Click "View →" to open file via CloudFront/S3
+- Click "View →" to open file via pre-signed URL
 
 ## 📊 Architecture Components
 
@@ -114,15 +118,10 @@ Open this URL in your browser to:
 
 ### S3 Bucket
 - **Purpose:** Store uploaded files
-- **Access:** Public read (for demo purposes)
+- **Access:** Private (IAM role-based access)
 - **Naming:** `demo-webapp-bucket-<timestamp>`
 - **Region:** us-east-1
-
-### CloudFront (Optional)
-- **Purpose:** CDN for fast global delivery
-- **Origin:** S3 bucket
-- **Caching:** Enabled
-- **HTTPS:** Supported
+- **Security:** BlockPublicAccess enabled on all settings
 - **Deployment time:** 15-20 minutes to fully activate
 
 ## 🔧 Configuration Files
@@ -154,28 +153,25 @@ Werkzeug==3.0.0
 ./cleanup-beanstalk.sh
 ```
 
-This will:
+The script will:
 1. Terminate Elastic Beanstalk environment
 2. Delete Elastic Beanstalk application
 3. Empty and delete S3 bucket
-4. Disable CloudFront distribution (deletion takes 15-20 min)
-5. Remove local configuration files
+4. Remove local configuration files
 
 ## 💰 Cost Information
 
 ### Expected Costs (per hour)
 - **Elastic Beanstalk:** Free (you only pay for underlying resources)
-- **EC2 t2.micro:** $0.0116/hour (Free Tier: 750 hours/month)
+- **EC2 t3.micro:** $0.0104/hour (Free Tier: 750 hours/month)
 - **S3 Storage:** $0.023/GB/month (Free Tier: 5GB)
 - **S3 Requests:** $0.0004/1000 requests (Free Tier: 2000 PUT, 20000 GET)
-- **CloudFront:** $0.085/GB (Free Tier: 50GB/month)
 
-**Total demo cost:** < $0.10 if cleaned up within an hour
+**Total demo cost:** < $0.05 if cleaned up within an hour
 
 ### Free Tier Benefits
-- **EC2:** 750 hours/month of t2.micro
+- **EC2:** 750 hours/month of t3.micro
 - **S3:** 5GB storage, 20,000 GET requests, 2,000 PUT requests
-- **CloudFront:** 50GB data transfer out
 - **Data Transfer:** 15GB out per month
 
 ## 📚 What You'll Learn
@@ -192,11 +188,11 @@ This will:
 - Health monitoring
 - Zero-downtime updates
 
-### Storage & CDN
+### Storage
 - Object storage (S3)
-- Content delivery networks
-- Caching strategies
-- Global distribution
+- IAM role-based access
+- Pre-signed URLs for temporary access
+- Bucket security policies
 
 ### AWS Integration
 - IAM roles and policies
@@ -228,36 +224,32 @@ eb logs --stream
 - Verify IAM role has S3 permissions
 - Check bucket policy in AWS Console
 - Verify environment variables are set
-
-### CloudFront Not Working
-- CloudFront takes 15-20 minutes to fully deploy
-- Check distribution status in AWS Console
-- Verify origin is correctly configured
+- Check that bucket has BlockPublicAccess enabled
 
 ## 📖 Presentation Tips
 
 ### Demo Flow (10 minutes)
 1. **Show architecture diagram** (1 min)
 2. **Run deployment script** (mention it takes 5-7 min, have it pre-deployed)
-3. **Show AWS Console** - EB environment, S3 bucket, CloudFront
+3. **Show AWS Console** - EB environment, S3 bucket
 4. **Demo the application** - Upload file, view instance info
 5. **Explain PaaS benefits** - No server management, auto-scaling
-6. **Show file in S3** - AWS Console
-7. **Show file via CloudFront** - Explain CDN benefits
+6. **Show file in S3** - AWS Console (explain private access via pre-signed URLs)
+7. **Explain security** - IAM roles, restricted security groups, private S3
 8. **Cleanup demo** - Show cleanup script
 
 ### Key Talking Points
 - ✅ **PaaS vs IaaS:** EB manages infrastructure, you focus on code
 - ✅ **Scalability:** EB can auto-scale based on load
-- ✅ **Integration:** Easy integration with S3, CloudFront, RDS, etc.
+- ✅ **Integration:** Easy integration with S3, RDS, etc.
 - ✅ **Monitoring:** Built-in health checks and logging
+- ✅ **Security:** IAM roles, private S3, restricted access
 - ✅ **Cost-effective:** Pay only for what you use, Free Tier eligible
 
 ## 🔗 Additional Resources
 
 - [AWS Elastic Beanstalk Documentation](https://docs.aws.amazon.com/elasticbeanstalk/)
 - [Amazon S3 Documentation](https://docs.aws.amazon.com/s3/)
-- [Amazon CloudFront Documentation](https://docs.aws.amazon.com/cloudfront/)
 - [AWS Free Tier](https://aws.amazon.com/free/)
 
 ---
