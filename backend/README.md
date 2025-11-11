@@ -20,6 +20,8 @@ backend/
 │   │   │               │   └── Student.java              # Student JPA entity
 │   │   │               └── repository/
 │   │   │                   └── StudentRepository.java    # JPA repository interface
+│   │   │               └── service/
+│   │   │                   └── StudentService.java       # Business logic for student operations
 │   │   └── resources/
 │   │       ├── application.properties                    # Application configuration
 │   │       ├── schema.sql                               # Database schema
@@ -37,12 +39,7 @@ backend/
 
 ## Technology Stack
 
-- **Java 17+** - Programming language
-- **Spring Boot 3.2.1** - Application framework
-- **Spring Data JPA** - Data persistence
-- **H2 Database** - In-memory database
-- **Spring Boot Actuator** - Health monitoring
-- **Maven** - Build tool
+ - **Service Layer** - Encapsulates business logic for student management
 - **JUnit 5** - Testing framework
 
 ## Features
@@ -78,11 +75,6 @@ Spring Boot Actuator provides:
 
 ### Prerequisites
 
-- Java 17 or higher
-- Maven 3.6+
-
-### Installation & Running
-
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
@@ -100,8 +92,6 @@ Spring Boot Actuator provides:
    ```
 
 4. **Start the application**
-   ```bash
-   mvn spring-boot:run
    ```
 
    Or run the JAR file:
