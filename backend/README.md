@@ -4,6 +4,18 @@ A Spring Boot backend application for the SE Core Competency for QE project, fea
 
 ## Project Structure
 
+# SE Core Competency for QE - Backend
+
+A Spring Boot backend application for the SE Core Competency for QE project, featuring a REST API for student management with H2 in-memory database.
+
+## Features
+
+- RESTful API for student management (CRUD operations)
+- Health and info endpoints for monitoring
+- H2 in-memory database with pre-populated sample data
+- Spring Boot Actuator for health, metrics, and info
+- Unit and integration tests for controllers and application context
+
 ```
 backend/
 ├── src/
@@ -36,40 +48,31 @@ backend/
 ├── pom.xml                                              # Maven configuration
 └── README.md                                            # This file
 ```
+## Setting Up VS Code for Spring Boot Development
 
-## Technology Stack
+To set up Visual Studio Code for Spring Boot development:
 
- - **Service Layer** - Encapsulates business logic for student management
-- **JUnit 5** - Testing framework
+1. **Install Java Development Kit (JDK):**
 
-## Features
+2. **Install VS Code Extensions:**
+   - [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+   - [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack)
 
-### REST API Endpoints
+3. **Configure Java Home:**
+   - Set the `JAVA_HOME` environment variable to your JDK installation path.
 
-#### Health & Information
-- `GET /api/health` - Application health status
-- `GET /api/info` - Application information
+4. **Open the Project:**
+   - Open the project folder in VS Code.
 
-#### Student Management
-- `GET /api/students/getAllStudents` - Retrieve all students
-- `GET /api/students/{id}` - Retrieve student by ID
-- `POST /api/students` - Create new student
-- `PUT /api/students/{id}` - Update existing student
-- `DELETE /api/students/{id}` - Delete student
+5. **Build and Run:**
+   - Use the built-in terminal or the Run/Debug options provided by the extensions to build and run your Spring Boot application.
 
-### Database
+6. **Useful Commands:**
+   - `mvn spring-boot:run` (if using Maven)
+   - `./gradlew bootRun` (if using Gradle)
 
-The application uses H2 in-memory database with:
-- **Students table** with fields: id, name, email, registration_date
-- **Pre-populated data** with 5 sample students
-- **H2 Console** accessible at `/h2-console`
+Refer to the official [Spring Boot documentation](https://spring.io/projects/spring-boot) for more details.
 
-### Monitoring
-
-Spring Boot Actuator provides:
-- Health checks at `/actuator/health`
-- Application metrics at `/actuator/metrics`
-- Application info at `/actuator/info`
 
 ## Getting Started
 
