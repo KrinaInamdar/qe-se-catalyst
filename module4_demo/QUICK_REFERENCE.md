@@ -51,10 +51,10 @@ eb status
 ### Talking Points
 - ✓ "This is PaaS - AWS manages the infrastructure"
 - ✓ "Elastic Beanstalk handles EC2, load balancers, auto-scaling"
-- ✓ "S3 provides scalable object storage"
-- ✓ "CloudFront can deliver files globally with low latency"
+- ✓ "S3 provides scalable object storage with private access"
 - ✓ "Platform handles deployments, updates, and monitoring"
 - ✓ "We focus on code, AWS handles infrastructure"
+- ✓ "Security groups restricted to your IP for compliance"
 
 ---
 
@@ -178,20 +178,18 @@ aws lambda invoke --function-name demo-sns-handler \
 
 ### This Demo
 - **Elastic Beanstalk**: Free (platform itself)
-- **EC2 (managed by EB)**: $0.01/hour (terminate after demo)
+- **EC2 t3.micro**: $0.0104/hour (terminate after demo)
 - **S3 Storage**: < $0.01 (Free Tier: 5GB)
-- **CloudFront**: Free (Free Tier: 50GB)
 - **Lambda**: $0.00 (within free tier)
 - **SNS**: $0.00 (first 1000 publishes free)
 - **SQS**: $0.00 (first 1M requests free)
 - **Total Demo Cost**: < $0.10 if cleaned up promptly
 
 ### Monthly Costs (If Left Running)
-- **Elastic Beanstalk EC2**: ~$8.50/month
-- **S3 Storage**: ~$0.50/month (with demo files)
-- **CloudFront**: ~$0-5/month (low usage)
-- **Lambda** (low usage): ~$0-5/month
-- **SNS + SQS**: ~$0-2/month
+- **Elastic Beanstalk EC2**: ~$7.50/month (t3.micro)
+- **S3 Storage**: ~$0.25/month (with demo files)
+- **Lambda** (low usage): ~$0-1/month
+- **SNS + SQS**: ~$0-1/month
 
 ---
 
@@ -214,9 +212,6 @@ eb terminate demo-webapp-env --force
 aws s3 rm s3://demo-webapp-bucket-TIMESTAMP --recursive
 aws s3 rb s3://demo-webapp-bucket-TIMESTAMP
 
-# CloudFront (if created)
-# Must disable first, then delete after 15-20 min
-
 # Lambda
 aws lambda delete-function --function-name demo-sns-handler
 aws lambda delete-function --function-name demo-sqs-processor
@@ -238,9 +233,6 @@ aws sqs delete-queue --queue-url <SQS_QUEUE_URL>
 
 ### S3
 `https://console.aws.amazon.com/s3/`
-
-### CloudFront
-`https://console.aws.amazon.com/cloudfront/`
 
 ### Lambda
 `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions`

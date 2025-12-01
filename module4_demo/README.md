@@ -4,7 +4,7 @@
 
 **⚠️ REQUIRED READING: This demo has been updated to comply with Slalom AWS Innovation Labs security policies.**
 
-**See [SECURITY_COMPLIANCE.md](./SECURITY_COMPLIANCE.md) and [SECURITY_FIXES_SUMMARY.md](./SECURITY_FIXES_SUMMARY.md) for:**
+**See [SECURITY_COMPLIANCE.md](./SECURITY_COMPLIANCE.md) for:**
 - InfoSec policy compliance details
 - S3 bucket security (PRIVATE only, no public access)
 - Security group restrictions (NO 0.0.0.0/0 allowed)
@@ -38,7 +38,7 @@ Perfect for presentations, workshops, and educational purposes.
 - **SECURITY: S3 buckets are PRIVATE** (IAM role access only)
 - **SECURITY: Restricted to YOUR IP** (no public access)
 - Automated Elastic Beanstalk deployment
-- S3 integration with pre-signed URLs
+- S3 integration for file storage
 
 ### Part 2: Serverless Architecture (PaaS)
 - Three Lambda functions demonstrating event-driven architecture
@@ -48,7 +48,6 @@ Perfect for presentations, workshops, and educational purposes.
 
 ### Documentation
 - **SECURITY_COMPLIANCE.md** - ⚠️ REQUIRED: InfoSec policies and compliance
-- **SECURITY_FIXES_SUMMARY.md** - Security modifications and testing
 - **PRESENTATION_SCRIPT.md** - Detailed 20-minute presentation script with timing
 - **QUICK_REFERENCE.md** - Quick commands and troubleshooting guide
 - **PRE_DEMO_SETUP.md** - Complete setup instructions
@@ -215,18 +214,18 @@ After this demo, participants will understand:
 ## 💰 Cost Information
 
 ### Expected Demo Costs
-- **Elastic Beanstalk**: Free (pay for underlying resources)
-- **EC2 t3.micro**: $0.01/hour (Free Tier eligible)
+- **Elastic Beanstalk**: Free (platform itself)
+- **EC2 t3.micro**: $0.0104/hour (Free Tier eligible)
 - **S3 Storage**: < $0.01 for demo files
 - **Lambda**: $0.00 (within Free Tier)
 - **SNS**: $0.00 (first 1000 publishes free)
 - **SQS**: $0.00 (first 1M requests free)
 
-**Total Demo Cost**: < $0.05 if cleaned up within an hour
+**Total Demo Cost**: < $0.10 if cleaned up within an hour
 
 ### AWS Free Tier
 - Elastic Beanstalk: Free (no additional charge)
-- EC2: 750 hours/month (t3.micro)
+- EC2: 750 hours/month (t2.micro or t3.micro)
 - S3: 5GB storage, 20,000 GET requests, 2,000 PUT requests
 - Lambda: 1M requests/month
 - SNS: 1,000 publishes/month

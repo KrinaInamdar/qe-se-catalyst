@@ -159,7 +159,8 @@ ls -la
 chmod +x cleanup.sh
 
 # Part 1 scripts
-chmod +x part1-ec2-demo/setup-ec2.sh
+chmod +x part1-ec2-demo/deploy-beanstalk.sh
+chmod +x part1-ec2-demo/cleanup-beanstalk.sh
 
 # Part 2 scripts
 chmod +x part2-serverless-demo/deploy-lambda.sh
@@ -169,24 +170,19 @@ chmod +x part2-serverless-demo/cleanup-lambda.sh
 
 ### 6. Test Run (Optional but Recommended)
 
-#### Test EC2 Deployment
+#### Test Elastic Beanstalk Deployment
 ```bash
 cd part1-ec2-demo
-./setup-ec2.sh
+./deploy-beanstalk.sh
 ```
 
-**Wait 3 minutes, then:**
+**Wait 5-7 minutes, then:**
 ```bash
-# Get the public IP from script output
-# Test in browser: http://PUBLIC_IP:5000
+# Get the application URL from script output
+# Test in browser: http://demo-webapp-env.us-east-1.elasticbeanstalk.com
 
 # Clean up
-INSTANCE_ID=$(aws ec2 describe-instances \
-    --filters "Name=tag:Name,Values=Demo-Web-App" \
-    --query 'Reservations[0].Instances[0].InstanceId' \
-    --output text)
-
-aws ec2 terminate-instances --instance-ids $INSTANCE_ID
+./cleanup-beanstalk.sh
 ```
 
 #### Test Lambda Deployment
@@ -250,13 +246,13 @@ aws ec2 describe-key-pairs --key-names demo-key > /dev/null 2>&1 && echo "✓ SS
 echo ""
 
 echo "3. Required Files:"
-[ -f "part1-ec2-demo/setup-ec2.sh" ] && echo "✓ EC2 setup script" || echo "✗ EC2 script missing"
+[ -f "part1-ec2-demo/deploy-beanstalk.sh" ] && echo "✓ Elastic Beanstalk deploy script" || echo "✗ EB script missing"
 [ -f "part2-serverless-demo/deploy-lambda.sh" ] && echo "✓ Lambda deploy script" || echo "✗ Lambda script missing"
 [ -f "cleanup.sh" ] && echo "✓ Cleanup script" || echo "✗ Cleanup script missing"
 echo ""
 
 echo "4. Script Permissions:"
-[ -x "part1-ec2-demo/setup-ec2.sh" ] && echo "✓ EC2 script executable" || echo "✗ Run: chmod +x part1-ec2-demo/setup-ec2.sh"
+[ -x "part1-ec2-demo/deploy-beanstalk.sh" ] && echo "✓ EB script executable" || echo "✗ Run: chmod +x part1-ec2-demo/deploy-beanstalk.sh"
 [ -x "part2-serverless-demo/deploy-lambda.sh" ] && echo "✓ Lambda script executable" || echo "✗ Run: chmod +x part2-serverless-demo/deploy-lambda.sh"
 [ -x "cleanup.sh" ] && echo "✓ Cleanup script executable" || echo "✗ Run: chmod +x cleanup.sh"
 echo ""

@@ -14,12 +14,12 @@
 
 ---
 
-## Part 1: IaaS - EC2 Deployment (8 minutes)
+## Part 1: PaaS Hybrid - Elastic Beanstalk Deployment (8 minutes)
 
 ### Setup and Explanation (3 minutes)
 
-**[Slide: IaaS Concept]**
-"Let's start with IaaS - Infrastructure as a Service. With IaaS, you rent virtual infrastructure but manage the operating system, runtime, and applications yourself."
+**[Slide: IaaS/PaaS Hybrid Concept]**
+"Let's start with Elastic Beanstalk - a Platform as a Service that abstracts infrastructure management. With Elastic Beanstalk, AWS manages the infrastructure, load balancing, and scaling, while we focus on our application code."
 
 **[Switch to Terminal]**
 ```bash
@@ -34,44 +34,44 @@ cat app.py
 ```
 
 **Talking points while showing code:**
-- "Simple Python Flask application"
-- "Will run on EC2 instance we fully control"
-- "We're responsible for the OS, security patches, and application management"
+- "Simple Python Flask application with S3 integration"
+- "Will run on Elastic Beanstalk - a managed platform"
+- "We write code, AWS handles infrastructure, scaling, and patching"
 
-### Deploy to EC2 (3 minutes)
+### Deploy to Elastic Beanstalk (3 minutes)
 
 **[Terminal]**
 ```bash
-./setup-ec2.sh
+./deploy-beanstalk.sh
 ```
 
 **While script runs, explain:**
-1. "Creating a security group - this is our virtual firewall"
-2. "Launching an EC2 instance - a virtual server in AWS"
-3. "Using Amazon Linux 2 AMI - we chose the operating system"
-4. "User data script automatically installs Python and our application"
-5. "We define everything: instance type, networking, storage"
+1. "Creating S3 bucket for file storage - secured with PRIVATE access"
+2. "Packaging application with dependencies"
+3. "Creating Elastic Beanstalk environment"
+4. "AWS automatically provisions EC2, load balancer, and auto-scaling"
+5. "Security groups restricted to your IP for compliance"
 
-**Key IaaS characteristics to mention:**
-- ✓ Full control over infrastructure
-- ✓ Choose OS, instance size, networking
-- ✓ Responsible for patching and updates
-- ✓ Pay for running instances (hourly)
-- ✓ Manual or automated scaling
+**Key PaaS characteristics to mention:**
+- ✓ Platform manages infrastructure automatically
+- ✓ Built-in load balancing and auto-scaling
+- ✓ AWS handles patching and updates
+- ✓ Pay for underlying EC2 instances (hourly)
+- ✓ Focus on code, not infrastructure management
 
 ### Show Running Application (2 minutes)
 
 **[Browser]**
-Open: `http://PUBLIC_IP:5000`
+Open: URL from script output (e.g., `http://demo-webapp-env.us-east-1.elasticbeanstalk.com`)
 
 **Point out on screen:**
-- "Application is running on our EC2 instance"
-- "Shows hostname and IP of the actual server"
-- "Click refresh - we're hitting a real server"
-- "This is pure IaaS - we manage everything"
+- "Application is running on Elastic Beanstalk-managed infrastructure"
+- "Upload a file - it's stored in private S3 bucket"
+- "Files accessible via pre-signed URLs for security"
+- "This is PaaS - AWS manages the infrastructure, we manage the code"
 
 **Comparison point:**
-"In a traditional data center, we'd buy and rack physical servers. With EC2, we provision virtual servers in minutes, but still manage them like physical servers."
+"With Elastic Beanstalk, we don't manage servers. AWS handles capacity, load balancing, scaling, and health monitoring. We deploy code, AWS handles the rest."
 
 ---
 
@@ -168,21 +168,21 @@ aws logs tail /aws/lambda/demo-sqs-processor --follow
 
 **[Slide: IaaS vs PaaS Comparison]**
 
-| Aspect | IaaS (EC2) | PaaS (Lambda) |
+| Aspect | PaaS (Elastic Beanstalk) | PaaS (Lambda) |
 |--------|------------|---------------|
-| **Management** | You manage servers | AWS manages everything |
-| **Scaling** | Manual/auto-scaling groups | Automatic, instant |
-| **Pricing** | Hourly (24/7) | Per-execution |
-| **Idle Cost** | Yes (server runs constantly) | No (pay only when used) |
-| **Setup Time** | Minutes to hours | Seconds |
-| **Maintenance** | OS patches, updates | None required |
-| **Best For** | Long-running applications | Event-driven workloads |
+| **Management** | Platform manages infrastructure | AWS manages everything |
+| **Scaling** | Automatic (load balancer) | Automatic, instant |
+| **Pricing** | Hourly EC2 instances | Per-execution |
+| **Idle Cost** | Yes (instances running) | No (pay only when used) |
+| **Setup Time** | Minutes | Seconds |
+| **Maintenance** | AWS handles platform updates | None required |
+| **Best For** | Web applications, APIs | Event-driven workloads |
 
 **Cost Example:**
 "For this demo:
-- EC2: ~$0.01/hour = $7.20/month (if left running)
+- Elastic Beanstalk: ~$7.50/month for t3.micro (if left running)
 - Lambda: ~$0.000001 per execution = pennies for thousands of requests
-- Lambda Free Tier: 1 million requests/month free!"
+- Both eligible for AWS Free Tier!"
 
 ---
 
@@ -200,16 +200,22 @@ aws logs tail /aws/lambda/demo-sqs-processor --follow
 
 **[Slide: Three Service Models]**
 
-**IaaS (EC2):**
+**IaaS (EC2 - lower level):**
 - Maximum control and flexibility
 - You manage OS and applications
 - Best for: Custom environments, specific requirements
 - Example: Running databases, custom applications
 
-**PaaS (Lambda, SNS, SQS):**
-- Focus on code, not infrastructure
+**PaaS (Elastic Beanstalk - managed platform):**
+- Simplified deployment and management
+- AWS manages infrastructure, you manage code
+- Best for: Web applications, APIs
+- Example: Web apps, REST APIs
+
+**PaaS (Lambda, SNS, SQS - serverless):**
+- Focus purely on code, zero infrastructure
 - Automatic scaling and management
-- Best for: Event-driven apps, microservices, APIs
+- Best for: Event-driven apps, microservices
 - Example: Real-time data processing, IoT backends
 
 **SaaS:**
@@ -221,8 +227,9 @@ aws logs tail /aws/lambda/demo-sqs-processor --follow
 ### When to Use Each
 
 **[Slide: Decision Guide]**
-- **Use IaaS when:** You need full control, specific configurations, or migrating legacy apps
-- **Use PaaS when:** Building modern apps, want automatic scaling, prefer managed services
+- **Use IaaS (EC2) when:** You need full control, specific configurations, or migrating legacy apps
+- **Use PaaS (Elastic Beanstalk) when:** Building web apps, want managed infrastructure, need auto-scaling
+- **Use PaaS (Lambda) when:** Event-driven workloads, sporadic usage, want zero server management
 - **Use SaaS when:** Standard functionality meets needs, no customization required
 
 ### Demo Wrap-up

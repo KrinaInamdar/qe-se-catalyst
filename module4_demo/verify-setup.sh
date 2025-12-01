@@ -82,9 +82,9 @@ echo ""
 # Check 5: Required Files
 echo "5. Checking demo files..."
 FILES=(
-    "part1-ec2-demo/setup-ec2.sh"
+    "part1-ec2-demo/deploy-beanstalk.sh"
     "part1-ec2-demo/app.py"
-    "part1-ec2-demo/user-data.sh"
+    "part1-ec2-demo/requirements.txt"
     "part2-serverless-demo/deploy-lambda.sh"
     "part2-serverless-demo/lambda-functions/sns_handler.py"
     "part2-serverless-demo/lambda-functions/sqs_processor.py"
@@ -104,7 +104,8 @@ echo ""
 # Check 6: Script Permissions
 echo "6. Checking script permissions..."
 SCRIPTS=(
-    "part1-ec2-demo/setup-ec2.sh"
+    "part1-ec2-demo/deploy-beanstalk.sh"
+    "part1-ec2-demo/cleanup-beanstalk.sh"
     "part2-serverless-demo/deploy-lambda.sh"
     "part2-serverless-demo/test-lambda.sh"
     "cleanup.sh"
@@ -205,7 +206,7 @@ if [ $ERRORS -eq 0 ] && [ $WARNINGS -eq 0 ]; then
     echo "You're ready for the demo! 🚀"
     echo ""
     echo "Quick start commands:"
-    echo "  cd part1-ec2-demo && ./setup-ec2.sh"
+    echo "  cd part1-ec2-demo && ./deploy-beanstalk.sh"
     echo "  cd part2-serverless-demo && ./deploy-lambda.sh"
 else
     if [ $ERRORS -gt 0 ]; then

@@ -41,7 +41,7 @@ chmod +x deploy-beanstalk.sh
 ## That's It! 
 
 In 5 minutes you're ready to:
-- ✅ Deploy applications to Elastic Beanstalk with S3 and CloudFront
+- ✅ Deploy applications to Elastic Beanstalk with S3
 - ✅ Create serverless Lambda functions
 - ✅ Demonstrate cloud computing concepts
 - ✅ Deliver your 20-minute presentation

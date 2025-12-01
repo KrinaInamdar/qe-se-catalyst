@@ -4,11 +4,12 @@
 ```
 module4_homework/
 ├── README.md                       # Main homework instructions
-├── SUBMISSION.md                   # Submission checklist and form
 ├── TESTING_GUIDE.md                # Testing examples
 ├── QUICK_START.md                  # This file
-├── verify-homework.sh              # Verification script
+├── verify-homework.sh              # Verification script (bash)
+├── verify-homework.ps1             # Verification script (PowerShell)
 ├── deploy-lambda-helper.sh         # Lambda deployment helper (INCOMPLETE)
+├── deploy-lambda-helper.ps1        # Lambda deployment helper (PowerShell)
 └── lambda-functions/
     ├── task_validator.py           # Lambda function (INCOMPLETE - TODO)
     └── task_notifier.py            # Lambda function (INCOMPLETE - TODO)
