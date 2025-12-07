@@ -14,6 +14,9 @@ import uuid
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'demo-secret-key-change-in-production')
 
+# File upload configuration - 16MB max (adjust as needed)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
 # AWS Configuration
 S3_BUCKET = os.environ.get('S3_BUCKET_NAME', 'demo-app-bucket')
 AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
@@ -29,6 +32,12 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'txt'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Error handler for file too large
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    flash('File is too large! Maximum file size is 16MB.')
+    return redirect(url_for('home')), 413
 
 @app.route('/')
 def home():
