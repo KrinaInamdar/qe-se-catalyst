@@ -8,8 +8,11 @@ __pycache__/
 *.pyd
 .Python
 
-# AWS
+# AWS - temporary test files
 response.json
+test-response.json
+order-payload.json
+*-response.json
 
 # OS
 .DS_Store

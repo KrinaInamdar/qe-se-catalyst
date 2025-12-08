@@ -61,24 +61,6 @@ else
 fi
 
 echo ""
-echo "Checking S3 Bucket..."
-echo "Enter your S3 bucket name:"
-read S3_BUCKET
-if aws s3 ls "s3://$S3_BUCKET" > /dev/null 2>&1; then
-    check_pass "S3 bucket '$S3_BUCKET' exists and is accessible"
-    
-    # Check if bucket is private
-    PUBLIC_ACCESS=$(aws s3api get-public-access-block --bucket "$S3_BUCKET" 2>/dev/null)
-    if [ $? -eq 0 ]; then
-        check_pass "S3 bucket has public access block configured (SECURE)"
-    else
-        check_warn "Could not verify public access block settings"
-    fi
-else
-    check_fail "S3 bucket '$S3_BUCKET' not found or not accessible"
-fi
-
-echo ""
 echo "Checking SNS Topic..."
 SNS_TOPICS=$(aws sns list-topics --query 'Topics[?contains(TopicArn, `task-notifications`)].TopicArn' --output text)
 if [ -n "$SNS_TOPICS" ]; then
@@ -112,14 +94,6 @@ LAMBDA_VALIDATOR=$(aws lambda get-function --function-name task-validator 2>/dev
 if [ $? -eq 0 ]; then
     check_pass "Lambda function 'task-validator' exists"
     
-    # Check environment variables
-    ENV_VARS=$(aws lambda get-function-configuration --function-name task-validator --query 'Environment.Variables' 2>/dev/null)
-    if echo "$ENV_VARS" | grep -q "S3_BUCKET_NAME"; then
-        check_pass "task-validator has environment variables configured"
-    else
-        check_warn "task-validator missing environment variables"
-    fi
-    
     # Check SQS trigger
     EVENT_SOURCE=$(aws lambda list-event-source-mappings --function-name task-validator 2>/dev/null)
     if [ -n "$EVENT_SOURCE" ]; then
@@ -139,30 +113,6 @@ else
 fi
 
 echo ""
-echo "Checking Elastic Beanstalk..."
-EB_ENVS=$(aws elasticbeanstalk describe-environments --query 'Environments[?ApplicationName==`task-manager`].EnvironmentName' --output text 2>/dev/null)
-if [ -n "$EB_ENVS" ]; then
-    check_pass "Elastic Beanstalk environment exists"
-    echo "  Environment: $EB_ENVS"
-    
-    # Check environment health
-    HEALTH=$(aws elasticbeanstalk describe-environments --environment-names "$EB_ENVS" --query 'Environments[0].Health' --output text 2>/dev/null)
-    if [ "$HEALTH" == "Green" ]; then
-        check_pass "Environment is healthy"
-    else
-        check_warn "Environment health: $HEALTH"
-    fi
-    
-    # Get application URL
-    APP_URL=$(aws elasticbeanstalk describe-environments --environment-names "$EB_ENVS" --query 'Environments[0].CNAME' --output text 2>/dev/null)
-    if [ -n "$APP_URL" ]; then
-        echo "  Application URL: http://$APP_URL"
-    fi
-else
-    check_fail "Elastic Beanstalk environment not found"
-fi
-
-echo ""
 echo "======================================"
 echo "Verification Summary"
 echo "======================================"
@@ -174,10 +124,9 @@ if [ $FAILED -eq 0 ]; then
     echo -e "${GREEN}🎉 All checks passed! Your homework is ready for submission.${NC}"
     echo ""
     echo "Next steps:"
-    echo "1. Test your application end-to-end"
-    echo "2. Take screenshots for submission"
-    echo "3. Answer the questions in SUBMISSION.md"
-    echo "4. Clean up resources after submission"
+    echo "1. Review AWS console the logs of your Lambda functions"
+    echo "2. Ensure SNS notifications are received (if email subscribed)"
+    echo "3. Push your branch with your code changes"
 else
     echo -e "${RED}⚠️  Some checks failed. Please fix the issues above.${NC}"
     echo ""

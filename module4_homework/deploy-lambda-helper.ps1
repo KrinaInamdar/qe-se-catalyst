@@ -1,5 +1,5 @@
 #===============================================================================
-# Lambda Deployment Helper Script - PowerShell Version
+# Lambda Deployment Helper Script - INCOMPLETE
 # Students must complete the TODOs to deploy their Lambda functions
 #===============================================================================
 
@@ -35,11 +35,6 @@ Write-Host "SNS Topic: $SNS_TOPIC_ARN" -ForegroundColor Green
 Write-Host "Getting SQS Queue URL..." -ForegroundColor Cyan
 $SQS_QUEUE_URL = ""  # YOUR CODE HERE
 Write-Host "SQS Queue: $SQS_QUEUE_URL" -ForegroundColor Green
-
-# TODO 4: Get your S3 bucket name
-# You should have created this earlier (if needed)
-Write-Host "Enter your S3 bucket name (or press Enter if not using S3):"
-$S3_BUCKET_NAME = Read-Host
 
 Write-Host ""
 Write-Host "======================================" -ForegroundColor Cyan
@@ -89,7 +84,7 @@ Write-Host ""
 Write-Host "Next steps:"
 Write-Host "1. Test your Lambda functions in AWS Console"
 Write-Host "2. Check CloudWatch Logs for execution logs"
-Write-Host "3. Send test messages to verify functionality"
+Write-Host "3. Test the event-driven flow by sending messages to SQS and SNS"
 Write-Host ""
 Write-Host "Verify deployment:"
 Write-Host "  aws lambda list-functions --query 'Functions[?starts_with(FunctionName, ``task``)].FunctionName'"

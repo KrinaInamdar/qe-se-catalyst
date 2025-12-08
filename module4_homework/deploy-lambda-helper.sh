@@ -40,11 +40,6 @@ echo "Getting SQS Queue URL..."
 SQS_QUEUE_URL=""  # YOUR CODE HERE
 echo "SQS Queue: $SQS_QUEUE_URL"
 
-# TODO 4: Get your S3 bucket name
-# You should have created this earlier
-echo "Enter your S3 bucket name:"
-read S3_BUCKET_NAME
-
 echo ""
 echo "======================================"
 echo "Deploying task_validator Lambda"
@@ -92,7 +87,7 @@ echo ""
 echo "Next steps:"
 echo "1. Test your Lambda functions in AWS Console"
 echo "2. Check CloudWatch Logs for execution logs"
-echo "3. Deploy your Flask application to Elastic Beanstalk"
+echo "3. Test the event-driven flow by sending messages to SQS and SNS"
 echo ""
 echo "Verify deployment:"
 echo "  aws lambda list-functions --query 'Functions[?starts_with(FunctionName, \`task\`)].FunctionName'"

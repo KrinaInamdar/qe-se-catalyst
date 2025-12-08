@@ -1,4 +1,4 @@
-# Part 1: Elastic Beanstalk Web Application Demo (IaaS/PaaS Hybrid)
+# Part 1: Elastic Beanstalk Web Application Demo (PaaS Hybrid)
 
 ## 🔒 SECURITY COMPLIANCE - Slalom AWS Innovation Labs
 
@@ -10,31 +10,57 @@
 - ✅ **IAM role-based access** (no access keys or local IAM users)
 - ⚠️ **Resources must be cleaned up within 2 WEEKS**
 
-**See [SECURITY_COMPLIANCE.md](../SECURITY_COMPLIANCE.md) for full details.**
-
 ---
 
 ## Overview
 
-This demo showcases AWS IaaS and PaaS capabilities by deploying a Flask web application using:
-- **AWS Elastic Beanstalk** - Platform as a Service for web app deployment
+This demo showcases AWS PaaS capabilities by deploying a Flask web application using:
+- **AWS Elastic Beanstalk** - PaaS platform for managed web app deployment
 - **Amazon S3** - Object storage for uploaded files
+- **IAM Roles** - Secure service-to-service access
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                       User's Browser                         │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-         ┌───────────▼──────────┐         ┌───────────────┐
-         │  Elastic Beanstalk   │◄────────│   S3 Bucket   │
-         │  - Load Balancer     │         │  - File Storage│
-         │  - EC2 Instances     │         │  - Private     │
-         │  - Auto Scaling      │         │  - IAM Access  │
-         │  - Health Monitoring │         └───────────────┘
-         └──────────────────────┘
+                    ┌─────────────────────┐
+                    │   User's Browser    │
+                    └──────────┬──────────┘
+                               │
+                    HTTP       │       Pre-signed URLs
+                  (Upload)     │       (Download, 1hr expiry)
+                               │
+                    ┌──────────▼──────────────────────────────┐
+                    │    AWS Elastic Beanstalk (PaaS)         │
+                    │  ┌────────────────────────────────────┐ │
+                    │  │  Nginx Proxy (20MB file limit)     │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    │  ┌──────────────▼─────────────────────┐ │
+                    │  │  Flask App (Python 3.9)            │ │
+                    │  │  - File upload handler             │ │
+                    │  │  - Instance info API               │ │
+                    │  │  - S3 integration (boto3)          │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    │  ┌──────────────▼─────────────────────┐ │
+                    │  │  EC2 Instance (t3.micro)           │ │
+                    │  │  + IAM Instance Profile            │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    └─────────────────┼───────────────────────┘
+                                      │
+                              IAM Role (S3 Access)
+                                      │
+                    ┌─────────────────▼───────────────────────┐
+                    │      Amazon S3 Bucket (Private)         │
+                    │  - BlockPublicAccess: Enabled           │
+                    │  - Access: IAM role only                │
+                    │  - Files served via pre-signed URLs     │
+                    └─────────────────────────────────────────┘
 ```
+
+**Flow:**
+1. User uploads file via web interface → Nginx → Flask app
+2. Flask app uses IAM role to upload file to private S3 bucket
+3. Flask generates pre-signed URL (1-hour expiry) for secure file access
+4. User can view/download files via temporary pre-signed URLs
 
 ## 📋 Features
 
@@ -67,12 +93,12 @@ cd part1-ec2-demo
 ```
 
 The script will:
-1. ✅ Check prerequisites
-2. ✅ Create S3 bucket for file storage (PRIVATE)
-4. ✅ Package the application
-5. ✅ Initialize Elastic Beanstalk
-6. ✅ Create and deploy the environment
-7. ✅ Configure environment variables
+1. Check prerequisites (AWS CLI, credentials)
+2. Create private S3 bucket for file storage
+3. Package the Flask application
+4. Initialize Elastic Beanstalk environment
+5. Deploy the application with auto-scaling
+6. Configure IAM roles and environment variables
 
 **Deployment time:** 5-7 minutes
 
@@ -111,39 +137,25 @@ Open this URL in your browser to:
 
 ### Elastic Beanstalk
 - **Platform:** Python 3.9
-- **Instance Type:** t2.micro (Free Tier eligible)
-- **Deployment:** Single instance (for demo)
-- **Health Monitoring:** Built-in
-- **Auto-scaling:** Configured but using single instance mode
+- **Instance Type:** t3.micro (Free Tier eligible, InfoSec approved)
+- **Deployment:** Single instance (demo mode)
+- **Health Monitoring:** Built-in with automatic health checks
+- **Auto-scaling:** Available but disabled for demo
 
 ### S3 Bucket
 - **Purpose:** Store uploaded files
-- **Access:** Private (IAM role-based access)
+- **Access:** Private (IAM role-based only)
 - **Naming:** `demo-webapp-bucket-<timestamp>`
 - **Region:** us-east-1
 - **Security:** BlockPublicAccess enabled on all settings
-- **Deployment time:** 15-20 minutes to fully activate
 
-## 🔧 Configuration Files
+## 🔧 Key Files
 
-### `.ebextensions/python.config`
-- Configures WSGI path
-- Sets environment variables
-- Configures IAM role for S3 access
-
-### `app.py`
-- Flask web application
-- S3 integration using boto3
-- File upload/download handlers
-- API endpoints for info and file listing
-
-### `requirements.txt`
-```
-Flask==3.0.0
-gunicorn==21.2.0
-boto3==1.34.0
-Werkzeug==3.0.0
-```
+- **`app.py`** - Flask web application with S3 integration
+- **`requirements.txt`** - Python dependencies (Flask, boto3, gunicorn)
+- **`.ebextensions/python.config`** - Elastic Beanstalk configuration (WSGI, IAM roles, file size limits)
+- **`deploy-beanstalk.sh`** - Automated deployment script
+- **`cleanup-beanstalk.sh`** - Resource cleanup script
 
 ## 🧹 Cleanup
 
@@ -174,57 +186,32 @@ The script will:
 - **S3:** 5GB storage, 20,000 GET requests, 2,000 PUT requests
 - **Data Transfer:** 15GB out per month
 
-## 📚 What You'll Learn
+## 📚 Key Concepts Demonstrated
 
-### IaaS Concepts
-- Virtual machine management (EC2)
-- Load balancing
-- Auto-scaling principles
-- Network configuration
+**PaaS (Elastic Beanstalk):**
+- Managed platform deployment - AWS handles infrastructure
+- Automatic health monitoring and recovery
+- Built-in load balancing and auto-scaling capabilities
+- Zero-downtime deployments
 
-### PaaS Concepts
-- Platform-managed deployments
-- Automatic scaling
-- Health monitoring
-- Zero-downtime updates
-
-### Storage
-- Object storage (S3)
-- IAM role-based access
-- Pre-signed URLs for temporary access
-- Bucket security policies
-
-### AWS Integration
-- IAM roles and policies
-- Service-to-service communication
-- Environment configuration
-- Resource tagging
+**Storage & Security:**
+- S3 object storage with private access
+- IAM role-based service permissions (no access keys)
+- Pre-signed URLs for temporary file access
+- Security group restrictions to specific IPs
 
 ## 🐛 Troubleshooting
 
-### Deployment Fails
-```bash
-# Check EB CLI logs
-eb logs
+**Deployment fails:**
+- Check logs: `eb logs` or AWS Console → Elastic Beanstalk → Logs
+- Verify AWS credentials are valid and not expired
 
-# Check AWS Console
-# Go to Elastic Beanstalk → Environments → Logs
-```
+**File upload fails (413 error):**
+- Fixed: File size limits increased to 16MB (Flask) and 20MB (Nginx)
 
-### Application Not Loading
-```bash
-# Check environment health
-eb health
-
-# Check application logs
-eb logs --stream
-```
-
-### S3 Upload Fails
-- Verify IAM role has S3 permissions
-- Check bucket policy in AWS Console
-- Verify environment variables are set
-- Check that bucket has BlockPublicAccess enabled
+**S3 access denied:**
+- Verify IAM role has S3 permissions in AWS Console
+- Check environment variables: `eb printenv`
 
 ## 📖 Presentation Tips
 
@@ -239,12 +226,11 @@ eb logs --stream
 8. **Cleanup demo** - Show cleanup script
 
 ### Key Talking Points
-- ✅ **PaaS vs IaaS:** EB manages infrastructure, you focus on code
-- ✅ **Scalability:** EB can auto-scale based on load
-- ✅ **Integration:** Easy integration with S3, RDS, etc.
-- ✅ **Monitoring:** Built-in health checks and logging
-- ✅ **Security:** IAM roles, private S3, restricted access
-- ✅ **Cost-effective:** Pay only for what you use, Free Tier eligible
+- ✅ **PaaS Platform:** Elastic Beanstalk manages infrastructure - you deploy code, AWS handles servers
+- ✅ **Auto-scaling:** Can scale from 1 to 100s of instances automatically
+- ✅ **Monitoring:** Built-in health checks, logging, and auto-recovery
+- ✅ **Security:** IAM roles (no access keys), private S3, IP-restricted security groups
+- ✅ **vs Serverless:** EB apps run continuously (idle cost) vs Lambda runs only when triggered (no idle cost)
 
 ## 🔗 Additional Resources
 

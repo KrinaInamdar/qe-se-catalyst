@@ -568,6 +568,9 @@ aws iam delete-role --role-name task-lambda-execution-role
 ### Issue: CloudWatch logs not appearing
 **Solution**: Ensure IAM role has AWSLambdaBasicExecutionRole attached
 
+### Issue: "Access Denied" errors
+**Solution**: Verify IAM role ARNs are correct and policies are attached
+
 ---
 
 ## 📚 Helpful Resources
@@ -590,23 +593,6 @@ By completing this homework, you will understand:
 - How to debug serverless applications using CloudWatch logs
 
 🚀 **Pro Tip**: Test each Lambda function individually before integrating them together!
-
-
-### Issue: Elastic Beanstalk deployment fails
-**Solution**: Check `eb logs` for error details
-
-### Issue: "Access Denied" errors
-**Solution**: Verify IAM role ARNs and environment variables
-
----
-
-## 📚 Helpful Resources
-
-- [AWS CLI Command Reference](https://docs.aws.amazon.com/cli/)
-- [Boto3 Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
-- [Lambda Python Guide](https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html)
-- [Elastic Beanstalk Python](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-apps.html)
-- Review the demo code in `module4_demo/` folder
 
 ---
 

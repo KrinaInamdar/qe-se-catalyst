@@ -8,6 +8,18 @@ echo "Cleaning Up Serverless Demo Resources"
 echo "======================================"
 echo ""
 
+# Check AWS credentials
+echo "Checking AWS credentials..."
+if ! aws sts get-caller-identity > /dev/null 2>&1; then
+    echo ""
+    echo "❌ Error: AWS credentials are invalid or expired"
+    echo ""
+    echo "Please refresh your credentials before cleanup."
+    exit 1
+fi
+echo "✓ AWS credentials valid"
+echo ""
+
 REGION="us-east-1"
 SNS_TOPIC_NAME="demo-notifications"
 SQS_QUEUE_NAME="demo-processing-queue"

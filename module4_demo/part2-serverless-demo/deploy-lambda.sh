@@ -18,11 +18,20 @@ LAMBDA_ROLE_NAME="demo-lambda-execution-role"
 
 echo "Step 1: Checking AWS CLI configuration..."
 if ! aws sts get-caller-identity > /dev/null 2>&1; then
-    echo "Error: AWS CLI is not configured. Please run 'aws configure' first."
+    echo ""
+    echo "❌ Error: AWS credentials are invalid or expired"
+    echo ""
+    echo "Please refresh your credentials:"
+    echo "  1. If using aws-azure-login: Run 'aws-azure-login'"
+    echo "  2. If using AWS Academy: Get new credentials from AWS Details"
+    echo "  3. If using SSO: Run 'aws sso login'"
+    echo ""
+    echo "After refreshing credentials, run this script again."
+    echo ""
     exit 1
 fi
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-echo "✓ AWS CLI configured (Account: $ACCOUNT_ID)"
+echo "✓ AWS credentials valid (Account: $ACCOUNT_ID)"
 echo ""
 
 echo "Step 2: Creating IAM role for Lambda..."
@@ -86,7 +95,7 @@ echo "✓ SNS Topic: $SNS_TOPIC_ARN"
 
 # Subscribe to SNS topic (optional - for demo purposes)
 echo "  📧 Subscribe your email to receive notifications:"
-echo "     aws sns subscribe --topic-arn $SNS_TOPIC_ARN --protocol email --notification-endpoint your-email@example.com"
+echo "     aws sns subscribe --topic-arn $SNS_TOPIC_ARN --protocol email --notification-endpoint guila.meiralins@slalom.com"
 echo ""
 
 echo "Step 4: Creating SQS queue..."

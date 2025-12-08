@@ -110,7 +110,7 @@ Save as `test-task-notifier.json`:
 
 ### Using AWS CLI
 
-#### Test task_validator:
+#### Test task-validator:
 ```bash
 cd lambda-functions
 
@@ -125,7 +125,7 @@ aws lambda invoke \
 cat output.json
 ```
 
-#### Test task_notifier:
+#### Test task-notifier:
 ```bash
 # Test with notification
 aws lambda invoke \
@@ -140,28 +140,11 @@ cat output.json
 
 ### Check CloudWatch Logs
 ```bash
-# For task_validator
+# For task-validator
 aws logs tail /aws/lambda/task-validator --follow
 
-# For task_notifier
+# For task-notifier
 aws logs tail /aws/lambda/task-notifier --follow
-```
-
----
-
-## Sample Task JSON for S3
-
-This is what tasks look like when stored in S3:
-
-```json
-{
-  "task_id": "task-20240115103000-a1b2c3d4",
-  "title": "Update user documentation",
-  "description": "The API documentation needs to reflect the new authentication flow",
-  "priority": "medium",
-  "created_at": "2024-01-15T10:30:00.123456",
-  "status": "pending"
-}
 ```
 
 ---
@@ -189,11 +172,11 @@ zip function.zip function.py
 **Solution**: Check that you're returning a dict with 'statusCode' and 'body'
 
 ### Issue: Environment variables not found
-**Solution**: Set them when creating/updating the function:
+**Solution**: This homework doesn't require environment variables. If you need them for extensions:
 ```bash
 aws lambda update-function-configuration \
   --function-name task-validator \
-  --environment Variables={S3_BUCKET_NAME=your-bucket,AWS_REGION=us-east-1}
+  --environment Variables={AWS_REGION=us-east-1}
 ```
 
 ### Issue: Logs not appearing

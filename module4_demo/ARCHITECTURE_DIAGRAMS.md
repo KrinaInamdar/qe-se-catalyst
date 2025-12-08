@@ -3,85 +3,102 @@
 ## Demo Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    AWS Cloud Computing Demo                  │
-│                                                              │
-│  ┌────────────────────┐         ┌───────────────────────┐  │
-│  │   Part 1: IaaS    │         │   Part 2: PaaS        │  │
-│  │   (EC2)           │         │   (Lambda + SNS/SQS)  │  │
-│  └────────────────────┘         └───────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                    AWS Cloud Computing Demo                           │
+│                                                                       │
+│  ┌───────────────────────────┐   ┌──────────────────────────────┐  │
+│  │   Part 1: PaaS Hybrid     │   │   Part 2: Serverless/FaaS    │  │
+│  │   Elastic Beanstalk + S3  │   │   Lambda + SNS + SQS         │  │
+│  │   (Managed Platform)      │   │   (Event-Driven Functions)   │  │
+│  └───────────────────────────┘   └──────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Part 1: IaaS Architecture (EC2)
+## Part 1: PaaS Hybrid Architecture (Elastic Beanstalk + S3)
 
 ### High-Level View
 ```
-┌──────────────────────────────────────────────────────────┐
-│                         Internet                          │
-└────────────────────┬─────────────────────────────────────┘
-                     │ HTTP Port 5000
-                     ▼
-┌──────────────────────────────────────────────────────────┐
-│               Security Group (Firewall)                   │
-│  Inbound Rules:                                          │
-│  - Port 5000 (HTTP) from 0.0.0.0/0                      │
-│  - Port 22 (SSH) from 0.0.0.0/0                         │
-└────────────────────┬─────────────────────────────────────┘
-                     ▼
-┌──────────────────────────────────────────────────────────┐
-│                   EC2 Instance (t2.micro)                 │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │           Amazon Linux 2 OS                        │  │
-│  │  ┌──────────────────────────────────────────────┐ │  │
-│  │  │      Python 3 + Flask Application           │ │  │
-│  │  │  - app.py (Flask web server)                │ │  │
-│  │  │  - Runs on port 5000                        │ │  │
-│  │  │  - Displays instance information            │ │  │
-│  │  └──────────────────────────────────────────────┘ │  │
-│  └────────────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────┘
+                    ┌─────────────────────┐
+                    │   User's Browser    │
+                    └──────────┬──────────┘
+                               │
+                    HTTP       │       Pre-signed URLs
+                  (Upload)     │       (Download, 1hr expiry)
+                               │
+                    ┌──────────▼──────────────────────────────┐
+                    │    AWS Elastic Beanstalk (PaaS)         │
+                    │  ┌────────────────────────────────────┐ │
+                    │  │  Nginx Proxy (20MB file limit)     │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    │  ┌──────────────▼─────────────────────┐ │
+                    │  │  Flask App (Python 3.9)            │ │
+                    │  │  - File upload handler             │ │
+                    │  │  - Instance info API               │ │
+                    │  │  - S3 integration (boto3)          │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    │  ┌──────────────▼─────────────────────┐ │
+                    │  │  EC2 Instance (t3.micro)           │ │
+                    │  │  + IAM Instance Profile            │ │
+                    │  └──────────────┬─────────────────────┘ │
+                    └─────────────────┼───────────────────────┘
+                                      │
+                              IAM Role (S3 Access)
+                                      │
+                    ┌─────────────────▼───────────────────────┐
+                    │      Amazon S3 Bucket (Private)         │
+                    │  - BlockPublicAccess: Enabled           │
+                    │  - Access: IAM role only                │
+                    │  - Files served via pre-signed URLs     │
+                    └─────────────────────────────────────────┘
+
+AWS Manages:
+├── Platform (EC2, Load Balancer, Auto Scaling)
+├── Operating System patching
+├── Runtime environment updates
+└── Health monitoring & recovery
 
 You Manage:
-├── Operating System (Amazon Linux 2)
-├── Python Runtime
-├── Application Code
-├── Security Patches
-├── Scaling Configuration
-└── Server Maintenance
-```
+├── Application Code (Flask)
+└── Configuration (.ebextensions)
 
-### EC2 Component Breakdown
+### Elastic Beanstalk Component Breakdown
 ```
-┌─────────────────────────────────────────────────┐
-│                EC2 Instance                      │
-├─────────────────────────────────────────────────┤
-│ Instance Type: t2.micro                         │
-│ vCPUs: 1                                        │
-│ Memory: 1 GB                                    │
-│ Storage: 8 GB EBS                               │
-│ Network: VPC + Public IP                        │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│          Elastic Beanstalk Environment              │
+├─────────────────────────────────────────────────────┤
+│ Platform: Python 3.9                                │
+│ Instance Type: t3.micro (InfoSec approved)          │
+│ Deployment: Single instance (demo mode)             │
+│ Region: us-east-1                                   │
+└─────────────────────────────────────────────────────┘
          │
-         ├── Operating System Layer
-         │   └── Amazon Linux 2
+         ├── Nginx Proxy Layer
+         │   ├── Reverse proxy
+         │   ├── 20MB file size limit
+         │   └── SSL/TLS termination (if configured)
          │
-         ├── Runtime Layer
-         │   ├── Python 3.9
+         ├── Application Layer
          │   ├── Flask 3.0.0
-         │   └── Gunicorn (WSGI server)
+         │   ├── Gunicorn WSGI server
+         │   └── boto3 (AWS SDK)
          │
-         └── Application Layer
-             ├── app.py (Flask app)
-             ├── templates/index.html
-             └── Systemd service (webapp.service)
-```
+         ├── Application Files
+         │   ├── app.py (Flask routes)
+         │   ├── templates/index.html
+         │   ├── requirements.txt
+         │   └── .ebextensions/python.config
+         │
+         └── AWS Integrations
+             ├── IAM Instance Profile
+             ├── S3 bucket access
+             ├── CloudWatch Logs
+             └── Health monitoring
 
 ---
 
-## Part 2: PaaS Architecture (Serverless)
+## Part 2: Serverless/FaaS Architecture (Lambda + SNS + SQS)
 
 ### Complete Serverless Flow
 ```
@@ -221,36 +238,35 @@ Message Flow:
 
 ---
 
-## IaaS vs PaaS Comparison Visual
+## PaaS vs Serverless Comparison Visual
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                    Responsibility Model                       │
 └──────────────────────────────────────────────────────────────┘
 
-IaaS (EC2)                              PaaS (Lambda)
+PaaS Hybrid                         Serverless/FaaS
+(Elastic Beanstalk)                 (Lambda)
                                         
 ┌──────────────────┐                   ┌──────────────────┐
 │  Application     │ ← YOU MANAGE      │  Application     │ ← YOU
-├──────────────────┤                   ├──────────────────┤
-│  Data            │ ← YOU MANAGE      │                  │
+├──────────────────┤                   │  (Functions)     │
+│  Configuration   │ ← YOU MANAGE      ├──────────────────┤
 ├──────────────────┤                   │                  │
-│  Runtime (Python)│ ← YOU MANAGE      │                  │
+│  Platform        │ ← AWS MANAGES     │                  │
 ├──────────────────┤                   │                  │
-│  OS (Linux)      │ ← YOU MANAGE      │                  │
+│  Runtime         │ ← AWS MANAGES     │  Runtime         │ ← AWS
 ├──────────────────┤                   ├──────────────────┤
-│  Virtualization  │ ← AWS MANAGES     │  Runtime         │ ← AWS
+│  OS              │ ← AWS MANAGES     │  OS              │ ← AWS
 ├──────────────────┤                   ├──────────────────┤
-│  Servers         │ ← AWS MANAGES     │  OS              │ ← AWS
+│  Servers         │ ← AWS MANAGES     │  Servers         │ ← AWS
 ├──────────────────┤                   ├──────────────────┤
-│  Storage         │ ← AWS MANAGES     │  Servers         │ ← AWS
-├──────────────────┤                   ├──────────────────┤
-│  Networking      │ ← AWS MANAGES     │  Infrastructure  │ ← AWS
+│  Infrastructure  │ ← AWS MANAGES     │  Infrastructure  │ ← AWS
 └──────────────────┘                   └──────────────────┘
 
-More Control/Effort                    Less Control/Effort
-More Flexibility                       More Convenience
-```
+App runs continuously                 Functions run on-demand
+Idle cost (always-on)                 No idle cost (pay per execution)
+More control over platform            Less control, more convenience
 
 ---
 
@@ -259,24 +275,25 @@ More Flexibility                       More Convenience
 ```
 Monthly Cost Estimate (Typical Usage)
 
-EC2 (IaaS)                         Lambda (PaaS)
+Elastic Beanstalk (PaaS)           Lambda (Serverless/FaaS)
 ────────────────────────           ────────────────────────
-Running 24/7                       Sporadic execution
+Running 24/7                       Event-driven execution
 
 ┌──────────────────┐               ┌──────────────────┐
-│   t2.micro       │               │  1M requests/mo  │
-│   $8.50/month    │               │  FREE TIER       │
-│                  │               │  $0.20 after FT  │
+│   t3.micro       │               │  1M requests/mo  │
+│   ~$7.50/month   │               │  FREE TIER       │
+│   (EC2 cost)     │               │  $0.20 after FT  │
+│  + S3 storage    │               │                  │
 │  Always-on cost  │               │  Pay per use     │
 └──────────────────┘               └──────────────────┘
-       High                              Low
+     Moderate                           Very Low
     fixed cost                      variable cost
 
 Best for:                          Best for:
-• Always-on applications           • Sporadic workloads
-• Predictable traffic              • Variable traffic
-• Custom configurations            • Event-driven apps
-• Long-running processes           • Microservices
+• Web applications                 • Event-driven workloads
+• APIs with steady traffic         • Sporadic traffic
+• Continuous services              • Microservices
+• Moderate control needed          • Auto-scaling needs
 ```
 
 ---
@@ -318,38 +335,42 @@ Characteristics:
 
 ## Demo Deployment Sequence
 
-### Part 1: EC2 Deployment Steps
+### Part 1: Elastic Beanstalk Deployment Steps
 ```
-1. setup-ec2.sh execution
+1. deploy-beanstalk.sh execution
    │
-   ├─► Step 1: Check AWS CLI
+   ├─► Step 1: Check AWS CLI & credentials
    │
-   ├─► Step 2: Get Latest AMI
+   ├─► Step 2: Create private S3 bucket
+   │           ├─► BlockPublicAccess enabled
+   │           └─► Unique name with timestamp
    │
-   ├─► Step 3: Create Security Group
-   │           ├─► Allow port 5000 (HTTP)
-   │           └─► Allow port 22 (SSH)
+   ├─► Step 3: Package Flask application
+   │           ├─► app.py
+   │           ├─► requirements.txt
+   │           ├─► templates/index.html
+   │           └─► .ebextensions/python.config
    │
-   ├─► Step 4: Verify SSH Key Pair
+   ├─► Step 4: Initialize Elastic Beanstalk
+   │           ├─► Python 3.9 platform
+   │           └─► us-east-1 region
    │
-   ├─► Step 5: Launch EC2 Instance
-   │           ├─► Attach security group
-   │           ├─► Inject user-data script
-   │           └─► Tag as "Demo-Web-App"
+   ├─► Step 5: Create EB environment
+   │           ├─► t3.micro instance
+   │           ├─► IAM instance profile
+   │           ├─► Environment variables (S3 bucket)
+   │           └─► Single instance deployment
    │
-   ├─► Step 6: Wait for Running State
-   │
-   └─► Step 7: Display Public IP
+   └─► Step 6: Display application URL
                 │
-                └─► User-data script runs:
-                    ├─► Update packages
-                    ├─► Install Python 3
-                    ├─► Create app files
-                    ├─► Install Flask
-                    ├─► Create systemd service
-                    └─► Start application
+                └─► EB provisions:
+                    ├─► EC2 instance
+                    ├─► Security groups
+                    ├─► Nginx configuration
+                    ├─► Application deployment
+                    └─► Health monitoring
 
-Time: ~3 minutes total
+Time: ~5-7 minutes total
 ```
 
 ### Part 2: Lambda Deployment Steps
@@ -392,13 +413,19 @@ Time: ~2 minutes total
 │                 AWS CloudWatch Integration                  │
 └────────────────────────────────────────────────────────────┘
 
-EC2 Metrics                          Lambda Metrics
-──────────────                      ────────────────
-• CPU Utilization                   • Invocations
-• Network In/Out                    • Duration
-• Disk Read/Write                   • Errors
-• Status Checks                     • Throttles
-                                    • Concurrent Executions
+Elastic Beanstalk Metrics            Lambda Metrics
+─────────────────────────           ────────────────
+• Environment Health                • Invocations
+• Instance Health                   • Duration
+• Application Requests              • Errors
+• HTTP 4xx/5xx errors               • Throttles
+• Latency                           • Concurrent Executions
+
+S3 Metrics
+──────────
+• Bucket Size
+• Number of Objects
+• Upload/Download Requests
 
          │                                   │
          └───────────┬───────────────────────┘
@@ -458,17 +485,18 @@ EC2 Metrics                          Lambda Metrics
 
 ## Scaling Patterns
 
-### EC2 Scaling (Manual/Planned)
+### Elastic Beanstalk Scaling (Configurable)
 ```
 Traffic:  Low ────► Medium ────► High ────► Low
           │         │            │          │
-EC2:      │         │            │          │
+EB:       │         │            │          │
 ┌─────┐   │  ┌─────┬─────┐      │  ┌──┬──┬──┬──┐  │  ┌─────┐
 │ i-1 │◄──┘  │ i-1 │ i-2 │◄─────┘  │i1│i2│i3│i4│◄─┘  │ i-1 │
 └─────┘      └─────┴─────┘         └──┴──┴──┴──┘     └─────┘
   (1)           (2)                    (4)              (1)
 
-Manual or Auto Scaling Group required
+Auto-scaling available (disabled for demo)
+Can configure min/max instances
 ```
 
 ### Lambda Scaling (Automatic/Instant)

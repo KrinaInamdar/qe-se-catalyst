@@ -5,12 +5,12 @@
 ### Introduction (1 minute)
 
 **[Slide: Title Slide]**
-"Today, we'll explore cloud computing fundamentals through a live AWS demonstration. We'll cover the three main service models: IaaS, PaaS, and SaaS, with hands-on examples using AWS services."
+"Today, we'll explore cloud computing through a live AWS demonstration. We'll cover two Platform as a Service approaches - managed platform deployment and serverless architecture - plus Software as a Service tools we use along the way."
 
 **Key Points:**
-- IaaS: Infrastructure as a Service (EC2)
-- PaaS: Platform as a Service (Lambda, SNS, SQS)
-- SaaS: Software as a Service (AWS Console, CloudWatch)
+- PaaS Hybrid: Elastic Beanstalk + S3 (managed platform)
+- Serverless/FaaS: Lambda + SNS + SQS (event-driven functions)
+- SaaS: AWS Console, CloudWatch (fully managed services)
 
 ---
 
@@ -18,15 +18,15 @@
 
 ### Setup and Explanation (3 minutes)
 
-**[Slide: IaaS/PaaS Hybrid Concept]**
-"Let's start with Elastic Beanstalk - a Platform as a Service that abstracts infrastructure management. With Elastic Beanstalk, AWS manages the infrastructure, load balancing, and scaling, while we focus on our application code."
+**[Slide: PaaS Hybrid Concept]**
+"Let's start with Elastic Beanstalk - a Platform as a Service that abstracts infrastructure management. With Elastic Beanstalk, AWS manages the EC2 instances, load balancing, scaling, and patching, while we focus on our application code."
 
 **[Switch to Terminal]**
 ```bash
 cd part1-ec2-demo
 ```
 
-"I've prepared a simple Flask web application. Let's deploy it to EC2."
+"I've prepared a Flask web application with S3 file storage. Let's deploy it to Elastic Beanstalk."
 
 **Show the code briefly:**
 ```bash
@@ -65,22 +65,23 @@ cat app.py
 Open: URL from script output (e.g., `http://demo-webapp-env.us-east-1.elasticbeanstalk.com`)
 
 **Point out on screen:**
-- "Application is running on Elastic Beanstalk-managed infrastructure"
-- "Upload a file - it's stored in private S3 bucket"
-- "Files accessible via pre-signed URLs for security"
-- "This is PaaS - AWS manages the infrastructure, we manage the code"
+- "Application running on Elastic Beanstalk - AWS manages the EC2 instance, Nginx proxy, health checks"
+- "Upload a file - stored in PRIVATE S3 bucket (Slalom InfoSec compliant)"
+- "Files accessed via pre-signed URLs (1-hour expiry) - no public S3 access"
+- "Instance info shows hostname and IP - proves it's running on real infrastructure"
+- "This is PaaS Hybrid - AWS manages platform, we manage code"
 
-**Comparison point:**
-"With Elastic Beanstalk, we don't manage servers. AWS handles capacity, load balancing, scaling, and health monitoring. We deploy code, AWS handles the rest."
+**Key difference vs Serverless:**
+"Notice the app is ALWAYS running - we pay hourly for the EC2 instance. In Part 2, we'll see serverless where functions only run when triggered."
 
 ---
 
-## Part 2: PaaS - Serverless Architecture (9 minutes)
+## Part 2: Serverless/FaaS Architecture (9 minutes)
 
 ### Introduction to Serverless (2 minutes)
 
-**[Slide: PaaS Concept]**
-"Now let's move to PaaS - Platform as a Service. With serverless, AWS manages all infrastructure. We just upload code."
+**[Slide: Serverless/FaaS Concept]**
+"Now let's move to true Serverless - also called FaaS (Function as a Service). While it's technically a subset of PaaS, serverless has unique characteristics: no servers to manage, event-driven execution, and pay-per-millisecond billing."
 
 **[Terminal]**
 ```bash
@@ -122,61 +123,47 @@ cd ../part2-serverless-demo
 
 ### Live Demonstration (3 minutes)
 
-**Test 1: SNS Trigger**
-```bash
-aws sns publish --topic-arn [ARN] --subject "Live Demo" --message "Order #12345 received"
-```
-
-**[Show CloudWatch Logs]**
-```bash
-aws logs tail /aws/lambda/demo-sns-handler --follow
-```
-
-**Explain what's happening:**
-- "Message published to SNS"
-- "Lambda automatically triggered in milliseconds"
-- "Function processes and forwards to SQS"
-- "All without any server management"
-
-**Test 2: SQS Queue**
-```bash
-aws sqs send-message --queue-url [URL] --message-body '{"order":"test"}'
-```
-
-**Show logs:**
-```bash
-aws logs tail /aws/lambda/demo-sqs-processor --follow
-```
-
-**Explain:**
-- "Message added to queue"
-- "Lambda polls queue automatically"
-- "Processes message and completes"
-- "Queue ensures no message loss"
-
-**Test 3: Complete Flow**
+**Run the automated test (recommended):**
 ```bash
 ./test-lambda.sh
 ```
 
-**Highlight:**
-- "All three components working together"
-- "Event-driven, loosely coupled"
-- "Each service scales independently"
+**[As script runs, explain the flow]**
+
+**What's happening:**
+1. "Test invokes Order Processor Lambda with sample order"
+2. "Order Processor validates order, generates order ID"
+3. "Automatically publishes to SNS → triggers SNS Handler Lambda"
+4. "Automatically sends to SQS → triggers SQS Processor Lambda"
+5. "All three functions execute in event-driven flow"
+
+**Key points to emphasize:**
+- "Notice: We only invoked ONE function"
+- "The other two triggered AUTOMATICALLY - that's event-driven architecture"
+- "No servers to manage - functions exist only during execution"
+- "Check the logs - you'll see all three functions executed"
+- "This took milliseconds - instant auto-scaling"
+
+**[Show CloudWatch Logs if time permits]**
+```bash
+aws logs tail /aws/lambda/demo-order-processor --since 2m
+aws logs tail /aws/lambda/demo-sns-handler --since 2m
+aws logs tail /aws/lambda/demo-sqs-processor --since 2m
+```
 
 ### Architecture Benefits (2 minutes)
 
-**[Slide: IaaS vs PaaS Comparison]**
+**[Slide: PaaS Hybrid vs Serverless Comparison]**
 
-| Aspect | PaaS (Elastic Beanstalk) | PaaS (Lambda) |
-|--------|------------|---------------|
-| **Management** | Platform manages infrastructure | AWS manages everything |
-| **Scaling** | Automatic (load balancer) | Automatic, instant |
-| **Pricing** | Hourly EC2 instances | Per-execution |
-| **Idle Cost** | Yes (instances running) | No (pay only when used) |
-| **Setup Time** | Minutes | Seconds |
-| **Maintenance** | AWS handles platform updates | None required |
-| **Best For** | Web applications, APIs | Event-driven workloads |
+| Aspect | PaaS Hybrid (Elastic Beanstalk) | Serverless/FaaS (Lambda) |
+|--------|--------------------------------|---------------------------|
+| **Management** | AWS manages platform, you manage code | AWS manages everything |
+| **Execution Model** | Always-on application | Event-driven functions |
+| **Scaling** | Auto-scaling (configure min/max) | Instant auto-scaling (0 to 1000s) |
+| **Pricing** | Hourly (EC2 instance cost) | Per-execution (millisecond billing) |
+| **Idle Cost** | Yes (instances always running) | **No (zero cost when idle)** |
+| **Setup Time** | 5-7 minutes | 2 minutes |
+| **Best For** | Web apps, continuous services | Event-driven, sporadic workloads |
 
 **Cost Example:**
 "For this demo:
@@ -198,25 +185,21 @@ aws logs tail /aws/lambda/demo-sqs-processor --follow
 
 ### Summary
 
-**[Slide: Three Service Models]**
+**[Slide: Cloud Service Models]**
 
-**IaaS (EC2 - lower level):**
-- Maximum control and flexibility
-- You manage OS and applications
-- Best for: Custom environments, specific requirements
-- Example: Running databases, custom applications
+**PaaS Hybrid (Elastic Beanstalk + S3):**
+- AWS manages platform infrastructure (EC2, load balancer, scaling)
+- You manage application code and configuration
+- Application runs continuously (idle cost)
+- Best for: Web applications, APIs with steady traffic
+- Example: E-commerce sites, REST APIs, web portals
 
-**PaaS (Elastic Beanstalk - managed platform):**
-- Simplified deployment and management
-- AWS manages infrastructure, you manage code
-- Best for: Web applications, APIs
-- Example: Web apps, REST APIs
-
-**PaaS (Lambda, SNS, SQS - serverless):**
-- Focus purely on code, zero infrastructure
-- Automatic scaling and management
-- Best for: Event-driven apps, microservices
-- Example: Real-time data processing, IoT backends
+**Serverless/FaaS (Lambda + SNS + SQS):**
+- AWS manages everything - zero server management
+- Event-driven execution - functions run only when triggered
+- Pay per execution (millisecond billing, no idle cost)
+- Best for: Event-driven apps, sporadic workloads, microservices
+- Example: File processing, IoT backends, scheduled tasks, webhooks
 
 **SaaS:**
 - Fully managed software
@@ -227,22 +210,27 @@ aws logs tail /aws/lambda/demo-sqs-processor --follow
 ### When to Use Each
 
 **[Slide: Decision Guide]**
-- **Use IaaS (EC2) when:** You need full control, specific configurations, or migrating legacy apps
-- **Use PaaS (Elastic Beanstalk) when:** Building web apps, want managed infrastructure, need auto-scaling
-- **Use PaaS (Lambda) when:** Event-driven workloads, sporadic usage, want zero server management
+- **Use Elastic Beanstalk when:** Building web apps with continuous traffic, need managed platform, want moderate control
+- **Use Lambda when:** Event-driven workloads, sporadic/unpredictable traffic, want zero server management and pay-per-use
 - **Use SaaS when:** Standard functionality meets needs, no customization required
+
+**Cost consideration:**
+- Elastic Beanstalk: Better for consistent traffic (fixed cost)
+- Lambda: Better for sporadic traffic (variable cost, zero when idle)
 
 ### Demo Wrap-up
 
 **[Terminal]**
-"Let me show both services running simultaneously:"
+"Let me show both architectures side by side:"
 
-**[Browser: EC2 App]** - `http://PUBLIC_IP:5000`
-**[Terminal: Lambda Logs]** - Real-time log streaming
+**[Browser: Elastic Beanstalk App]** - `http://demo-webapp-env.elasticbeanstalk.com`
+**[Terminal: Lambda Metrics]** - CloudWatch dashboard or test output
 
-"Both serving the same goal, different approaches:
-- EC2: Traditional, controllable, always-on
-- Lambda: Modern, managed, on-demand"
+"Both are PaaS, but different approaches:
+- Elastic Beanstalk: Managed platform, always-on, hourly cost
+- Lambda: Serverless functions, on-demand, pay-per-execution
+
+**Key insight:** Choose based on traffic patterns and cost model."
 
 ---
 
@@ -256,8 +244,8 @@ A: "Both models support databases. EC2 can host databases directly. Lambda conne
 **Q: "How do costs compare at scale?"**
 A: "Depends on usage patterns. Lambda wins for sporadic workloads. EC2 can be cheaper for consistent, high-traffic applications."
 
-**Q: "Can you mix IaaS and PaaS?"**
-A: "Absolutely! Most architectures use both. For example, EC2 for databases, Lambda for API processing."
+**Q: "Can you mix PaaS and Serverless?"**
+A: "Absolutely! Most architectures are hybrid. For example, Elastic Beanstalk for the web app, Lambda for background processing, RDS for database."
 
 **Q: "What about cold starts with Lambda?"**
 A: "Lambda has ~100-300ms cold start. For most use cases, this is acceptable. Use provisioned concurrency for latency-sensitive apps."
@@ -292,13 +280,14 @@ A: "Lambda has ~100-300ms cold start. For most use cases, this is acceptable. Us
 
 ### Real-World Use Cases
 
-**IaaS (EC2):**
-- Legacy application migration
-- Databases requiring specific configurations
-- Applications needing GPU compute
-- Development and testing environments
+**PaaS Hybrid (Elastic Beanstalk):**
+- Web applications with steady traffic
+- REST APIs serving mobile apps
+- E-commerce platforms
+- Content management systems
+- Applications needing moderate platform control
 
-**PaaS (Lambda):**
+**Serverless (Lambda):**
 - Image/video processing pipelines
 - Real-time file processing
 - Scheduled tasks and cron jobs
@@ -317,16 +306,17 @@ A: "Lambda has ~100-300ms cold start. For most use cases, this is acceptable. Us
 - **20 minutes:** Open for questions
 
 ### Key Messages to Drive Home
-1. **IaaS = Control** - You manage, you're responsible
-2. **PaaS = Convenience** - AWS manages, you focus on code
-3. **Cost = Usage-based** - Pay for what you use
-4. **No silver bullet** - Each has its place
+1. **PaaS Hybrid = Managed Platform** - AWS handles infrastructure, you handle code
+2. **Serverless = Zero Management** - AWS handles everything, you only write functions
+3. **Cost Model Matters** - Always-on vs pay-per-use changes economics
+4. **Choose by Traffic Pattern** - Consistent traffic → Elastic Beanstalk, Sporadic → Lambda
 
 ### Troubleshooting During Demo
 
-**If EC2 app doesn't load:**
-- "The user-data script takes 2-3 minutes to complete"
-- Show SSH into instance and check logs: `sudo journalctl -u webapp -f`
+**If Elastic Beanstalk app doesn't load:**
+- "Elastic Beanstalk deployment takes 5-7 minutes"
+- Show environment health in AWS Console
+- Check logs: `eb logs` or AWS Console → Elastic Beanstalk → Logs
 
 **If Lambda doesn't trigger:**
 - "Let's check CloudWatch Logs directly"
@@ -341,7 +331,7 @@ A: "Lambda has ~100-300ms cold start. For most use cases, this is acceptable. Us
 - Make it interactive: "Let's see what happens when..."
 - Show enthusiasm about serverless benefits
 - Acknowledge trade-offs honestly
-- Use analogies: "EC2 is like owning a car, Lambda is like Uber"
+- Use analogies: "Elastic Beanstalk is like a managed apartment, Lambda is like a hotel room - pay only when you're there"
 
 ---
 

@@ -6,13 +6,8 @@ HOMEWORK: Complete the TODOs below to make this function work
 """
 
 import json
-import boto3
 import os
 from datetime import datetime
-
-# Initialize AWS clients
-s3 = boto3.client('s3')
-cloudwatch = boto3.client('logs')
 
 def lambda_handler(event, context):
     """
@@ -130,9 +125,7 @@ def lambda_handler(event, context):
 
 
 # TESTING NOTES:
-# 1. Make sure to set environment variables when deploying:
-#    - S3_BUCKET_NAME (if you need to read from S3)
-#    - AWS_REGION
+# 1. No environment variables are required for this function
 #
 # 2. Test with sample SQS message:
 # {
