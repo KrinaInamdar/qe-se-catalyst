@@ -1,31 +1,11 @@
 # AWS Cloud Computing Demo - Complete Guide
 
-## 🔒 SECURITY COMPLIANCE NOTICE
-
-**⚠️ REQUIRED READING: This demo has been updated to comply with Slalom AWS Innovation Labs security policies.**
-
-**See [SECURITY_COMPLIANCE.md](./SECURITY_COMPLIANCE.md) for:**
-- InfoSec policy compliance details
-- S3 bucket security (PRIVATE only, no public access)
-- Security group restrictions (NO 0.0.0.0/0 allowed)
-- Resource lifecycle requirements (EC2 < 2 weeks)
-- Approved instance types (t3.micro)
-
-**Key Security Features:**
-- ✅ S3 buckets are PRIVATE (IAM role access only)
-- ✅ Security groups restricted to YOUR IP (auto-detected)
-- ✅ Uses approved instance types from InfoSec whitelist
-- ✅ No access keys or local IAM users
-- ⚠️ Resources MUST be cleaned up within 2 weeks
-
----
-
 ## 🎯 Overview
 
 This repository contains a comprehensive 20-minute demonstration of AWS cloud computing fundamentals, focusing on:
-- **IaaS (Infrastructure as a Service)**: Deploy web application to EC2
-- **PaaS (Platform as a Service)**: Serverless architecture with Lambda, SNS, and SQS
-- **SaaS (Software as a Service)**: AWS Console and managed services
+- **PaaS Hybrid**: Elastic Beanstalk managed platform with S3 integration
+- **Serverless/FaaS**: Event-driven architecture with Lambda, SNS, and SQS
+- **Comparison**: Understanding when to use managed platforms vs serverless
 
 Perfect for presentations, workshops, and educational purposes.
 
@@ -33,25 +13,23 @@ Perfect for presentations, workshops, and educational purposes.
 
 ## 📋 What's Included
 
-### Part 1: Elastic Beanstalk Web Application (IaaS/PaaS Hybrid) 🔒
+### Part 1: Elastic Beanstalk Web Application (PaaS Hybrid)
 - Flask web application with file upload
-- **SECURITY: S3 buckets are PRIVATE** (IAM role access only)
-- **SECURITY: Restricted to YOUR IP** (no public access)
+- S3 buckets are private (IAM role access only)
 - Automated Elastic Beanstalk deployment
-- S3 integration for file storage
+- Integrated monitoring and auto-scaling
 
-### Part 2: Serverless Architecture (PaaS)
+### Part 2: Serverless Architecture (Serverless/FaaS)
 - Three Lambda functions demonstrating event-driven architecture
 - SNS (Simple Notification Service) integration
 - SQS (Simple Queue Service) processing
 - Complete serverless workflow
 
 ### Documentation
-- **SECURITY_COMPLIANCE.md** - ⚠️ REQUIRED: InfoSec policies and compliance
 - **PRESENTATION_SCRIPT.md** - Detailed 20-minute presentation script with timing
-- **QUICK_REFERENCE.md** - Quick commands and troubleshooting guide
-- **PRE_DEMO_SETUP.md** - Complete setup instructions
-- **DEMO_OVERVIEW.md** - Architecture and concept overview
+- **ARCHITECTURE_DIAGRAMS.md** - Visual architecture diagrams and comparisons
+- **Part 1 README.md** - Elastic Beanstalk deployment guide
+- **Part 2 README.md** - Serverless architecture guide
 
 ---
 
@@ -60,13 +38,13 @@ Perfect for presentations, workshops, and educational purposes.
 ### Prerequisites
 - AWS Account with appropriate permissions
 - AWS CLI installed and configured
-- **NO SSH keys needed** (using Elastic Beanstalk managed instances)
 - macOS/Linux environment (or WSL on Windows)
-- **REQUIRED:** `aws-azure-login` for Slalom AWS Innovation Labs authentication
+- Python 3.9+ installed
+- (Optional) `aws-azure-login` for federated authentication
 
-### ⚠️ Authentication Setup (For Federated/Azure AD Users)
+### Authentication Setup (For Federated/Azure AD Users)
 
-If your AWS account uses **Azure AD authentication** (common in enterprise environments like Slalom), you'll need to use `aws-azure-login` instead of standard AWS credentials:
+If your AWS account uses **Azure AD authentication** (common in enterprise environments), you can use `aws-azure-login`:
 
 #### Install aws-azure-login
 ```bash
@@ -141,14 +119,13 @@ chmod +x cleanup.sh
 ```
 module4_demo/
 ├── README.md                           # This file
-├── DEMO_OVERVIEW.md                    # High-level architecture overview
 ├── PRESENTATION_SCRIPT.md              # Detailed 20-min presentation script
-├── QUICK_REFERENCE.md                  # Quick commands and troubleshooting
-├── PRE_DEMO_SETUP.md                   # Complete setup guide
+├── ARCHITECTURE_DIAGRAMS.md            # Visual architecture diagrams
+├── INFOSEC_ALERT_EXPLAINED.md          # Security compliance information
+├── GETTING_STARTED.md                  # Quick start guide
 ├── verify-setup.sh                     # Pre-flight verification script
-├── cleanup.sh                          # Complete resource cleanup
 │
-├── part1-ec2-demo/                     # IaaS/PaaS Demo
+├── part1-ec2-demo/                     # PaaS Hybrid Demo
 │   ├── README.md                       # Elastic Beanstalk demo documentation
 │   ├── app.py                          # Flask web application with S3
 │   ├── requirements.txt                # Python dependencies
@@ -158,7 +135,7 @@ module4_demo/
 │   ├── deploy-beanstalk.sh             # Automated deployment
 │   └── cleanup-beanstalk.sh            # Cleanup script
 │
-└── part2-serverless-demo/              # PaaS Demo
+└── part2-serverless-demo/              # Serverless/FaaS Demo
     ├── README.md                       # Serverless demo documentation
     ├── lambda-functions/
     │   ├── sns_handler.py              # SNS-triggered Lambda
@@ -175,21 +152,21 @@ module4_demo/
 
 After this demo, participants will understand:
 
-1. **IaaS Concepts**
-   - Virtual machine provisioning
-   - Security group configuration
-   - OS and application management
-   - Cost implications of always-on infrastructure
+1. **PaaS Hybrid Concepts (Elastic Beanstalk)**
+   - Managed platform deployment
+   - Automatic scaling and load balancing
+   - Integrated monitoring and health checks
+   - Platform-managed infrastructure
 
-2. **PaaS Concepts**
-   - Serverless computing benefits
+2. **Serverless/FaaS Concepts (Lambda)**
    - Event-driven architecture
-   - Message queuing patterns
-   - Auto-scaling and high availability
+   - Message queuing patterns (SNS/SQS)
+   - Pay-per-execution model
+   - Automatic scaling to zero
 
 3. **Service Model Comparison**
-   - When to use IaaS vs PaaS
-   - Cost models (hourly vs per-execution)
+   - When to use PaaS Hybrid vs Serverless
+   - Cost models (instance-based vs per-execution)
    - Management overhead differences
    - Scalability considerations
 
@@ -268,26 +245,11 @@ Enter:
 - **Default region**: `us-east-1`
 - **Default output format**: `json`
 
-### 3. Create SSH Key Pair
-
-```bash
-aws ec2 create-key-pair \
-    --key-name demo-key \
-    --query 'KeyMaterial' \
-    --output text > ~/.ssh/demo-key.pem
-
-chmod 400 ~/.ssh/demo-key.pem
-```
-
-**Note:** While not required for Elastic Beanstalk deployment, this key pair is useful for troubleshooting EB EC2 instances if needed.
-
-### 4. Verify Setup
+### 3. Verify Setup
 
 ```bash
 ./verify-setup.sh
 ```
-
-For complete setup instructions, see **PRE_DEMO_SETUP.md**.
 
 ---
 
@@ -300,13 +262,13 @@ For complete setup instructions, see **PRE_DEMO_SETUP.md**.
 3. **Prepare environment**: 
    - Large terminal font (16-18pt)
    - Clean browser with AWS Console bookmarks
-   - Print `QUICK_REFERENCE.md`
-4. **Clean up**: Run `./cleanup.sh` before demo
+   - Have CloudWatch Logs open in a tab
+4. **Clean up**: Run cleanup scripts before demo
 
 ### During Your Presentation
 
 1. **Follow the script**: Use `PRESENTATION_SCRIPT.md` for timing
-2. **Have backup ready**: Keep `QUICK_REFERENCE.md` open
+2. **Have logs ready**: Keep CloudWatch Logs tab open
 3. **Show, don't just tell**: Live demos are more impactful
 4. **Engage audience**: Ask questions, take brief pauses
 
@@ -358,8 +320,6 @@ aws lambda invoke \
 - Wait 10 seconds after creating IAM roles
 - Check CloudWatch Logs for detailed errors
 
-For complete troubleshooting, see `QUICK_REFERENCE.md`.
-
 ---
 
 ## 📚 Additional Resources
@@ -396,19 +356,20 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 🎯 Key Takeaways
 
-### IaaS/PaaS Hybrid (Elastic Beanstalk + S3)
-✅ Managed platform with infrastructure control  
+### PaaS Hybrid (Elastic Beanstalk + S3)
+✅ Managed platform - AWS handles infrastructure  
 ✅ Automatic scaling and load balancing  
 ✅ Integrated monitoring and health checks  
 ✅ Easy deployment and updates  
-❌ Less control than pure IaaS  
+❌ Instance-based pricing (always running)  
 ❌ Platform-specific limitations  
 
-### PaaS (Lambda, SNS, SQS)
+### Serverless/FaaS (Lambda, SNS, SQS)
 ✅ No server management  
-✅ Automatic scaling  
-✅ Pay per execution  
-❌ Less control over environment  
+✅ Automatic scaling (including to zero)  
+✅ Pay per execution only  
+❌ Cold start latency  
+❌ Execution time limits  
 
 ---
 

@@ -94,7 +94,7 @@ You have two options:
 
 ---
 
-## �🚀 Step-by-Step Instructions
+## 🚀 Step-by-Step Instructions
 
 ### Prerequisites
 
@@ -592,10 +592,8 @@ By completing this homework, you will understand:
 - The importance of IAM roles for granting permissions
 - How to debug serverless applications using CloudWatch logs
 
-🚀 **Pro Tip**: Test each Lambda function individually before integrating them together!
-
 ---
 
 Good luck! Remember: The goal is to understand how these services work together, not just to get it running. Take time to explore the AWS Console and understand what each service is doing.
 
-🚀 **Pro Tip**: Start early and test frequently. AWS can be tricky, and debugging takes time!
+🚀 **Pro Tip**: Test each Lambda function individually before integrating them together!
