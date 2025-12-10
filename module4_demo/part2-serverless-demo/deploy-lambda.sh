@@ -195,14 +195,41 @@ echo ""
 
 echo "Step 7: Configuring triggers..."
 
-# Subscribe SNS Handler Lambda to SNS topic
-aws sns subscribe \
+# Check for duplicate SNS subscriptions and clean them up
+ALL_SUBSCRIPTIONS=$(aws sns list-subscriptions-by-topic \
     --topic-arn $SNS_TOPIC_ARN \
-    --protocol lambda \
-    --notification-endpoint $SNS_LAMBDA_ARN \
-    --region $REGION > /dev/null 2>&1 || true
+    --query "Subscriptions[?Protocol=='lambda' && Endpoint=='$SNS_LAMBDA_ARN'].SubscriptionArn" \
+    --output text 2>/dev/null)
 
-# Grant SNS permission to invoke Lambda
+# Count subscriptions
+SUB_COUNT=$(echo "$ALL_SUBSCRIPTIONS" | wc -w | tr -d ' ')
+
+if [ "$SUB_COUNT" -gt 1 ]; then
+    echo "  ⚠️  Found $SUB_COUNT duplicate subscriptions, removing extras..."
+    # Keep first, remove others
+    FIRST=true
+    for sub_arn in $ALL_SUBSCRIPTIONS; do
+        if [ "$FIRST" = true ]; then
+            FIRST=false
+            echo "  ✓ Keeping subscription: $sub_arn"
+        else
+            aws sns unsubscribe --subscription-arn "$sub_arn" 2>/dev/null
+            echo "  ✓ Removed duplicate: $sub_arn"
+        fi
+    done
+elif [ "$SUB_COUNT" -eq 1 ]; then
+    echo "✓ SNS subscription already exists (no duplicates)"
+else
+    # Create new subscription
+    aws sns subscribe \
+        --topic-arn $SNS_TOPIC_ARN \
+        --protocol lambda \
+        --notification-endpoint $SNS_LAMBDA_ARN \
+        --region $REGION > /dev/null 2>&1
+    echo "✓ Created SNS subscription for Lambda"
+fi
+
+# Grant SNS permission to invoke Lambda (idempotent with statement-id)
 aws lambda add-permission \
     --function-name demo-sns-handler \
     --statement-id sns-invoke \
@@ -214,11 +241,29 @@ aws lambda add-permission \
 echo "✓ Connected SNS topic to Lambda"
 
 # Create event source mapping for SQS
-aws lambda create-event-source-mapping \
+# Check if mapping already exists
+EXISTING_MAPPING=$(aws lambda list-event-source-mappings \
     --function-name demo-sqs-processor \
     --event-source-arn $SQS_QUEUE_ARN \
-    --batch-size 10 \
-    --region $REGION > /dev/null 2>&1 || true
+    --query 'EventSourceMappings[0].UUID' \
+    --output text 2>/dev/null)
+
+if [ "$EXISTING_MAPPING" != "None" ] && [ -n "$EXISTING_MAPPING" ]; then
+    echo "  Event source mapping already exists, ensuring it's enabled..."
+    aws lambda update-event-source-mapping \
+        --uuid $EXISTING_MAPPING \
+        --enabled \
+        --region $REGION > /dev/null 2>&1
+    echo "✓ SQS event source mapping enabled"
+else
+    aws lambda create-event-source-mapping \
+        --function-name demo-sqs-processor \
+        --event-source-arn $SQS_QUEUE_ARN \
+        --batch-size 10 \
+        --enabled \
+        --region $REGION > /dev/null 2>&1
+    echo "✓ Created and enabled SQS event source mapping"
+fi
 
 echo "✓ Connected SQS queue to Lambda"
 echo ""

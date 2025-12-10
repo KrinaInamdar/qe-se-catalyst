@@ -58,8 +58,16 @@ echo "Creating/updating task_validator Lambda..."
 
 # TODO 7: Configure SQS trigger for task_validator
 # Hint: aws lambda create-event-source-mapping
+# IMPORTANT: Always use --enabled flag to ensure mapping is active!
+# If mapping already exists, use update-event-source-mapping to enable it
 echo "Setting up SQS trigger..."
 # YOUR CODE HERE
+# Example structure:
+# aws lambda create-event-source-mapping \
+#   --function-name task-validator \
+#   --event-source-arn $SQS_QUEUE_ARN \
+#   --batch-size 10 \
+#   --enabled  # <-- Don't forget this!
 
 echo ""
 echo "======================================"
@@ -76,8 +84,27 @@ echo "Creating/updating task_notifier Lambda..."
 
 # TODO 10: Configure SNS trigger for task_notifier
 # Hint: aws sns subscribe and aws lambda add-permission
+# IMPORTANT: Check if subscription already exists before creating!
+# Multiple subscriptions = Lambda triggered multiple times per message
 echo "Setting up SNS trigger..."
 # YOUR CODE HERE
+# Step 1: Check for existing subscription (recommended):
+# aws sns list-subscriptions-by-topic --topic-arn $SNS_TOPIC_ARN \
+#   --query "Subscriptions[?Protocol=='lambda' && Endpoint=='YOUR-LAMBDA-ARN']"
+#
+# Step 2: Only create if none exist:
+# aws sns subscribe \
+#   --topic-arn $SNS_TOPIC_ARN \
+#   --protocol lambda \
+#   --notification-endpoint YOUR-LAMBDA-ARN
+#
+# Step 3: Grant SNS permission to invoke Lambda:
+# aws lambda add-permission \
+#   --function-name task-notifier \
+#   --statement-id sns-invoke \
+#   --action lambda:InvokeFunction \
+#   --principal sns.amazonaws.com \
+#   --source-arn $SNS_TOPIC_ARN
 
 echo ""
 echo "======================================"

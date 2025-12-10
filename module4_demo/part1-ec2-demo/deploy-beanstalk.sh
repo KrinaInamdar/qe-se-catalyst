@@ -237,6 +237,39 @@ EOF
     sleep 10
 else
     echo "✓ IAM role already exists: $ROLE_NAME"
+    echo "  Updating S3 bucket access policy with new bucket name..."
+    
+    # Update S3 access policy with the new bucket name
+    cat > /tmp/s3-policy.json <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::$BUCKET_NAME",
+        "arn:aws:s3:::$BUCKET_NAME/*"
+      ]
+    }
+  ]
+}
+EOF
+    
+    aws iam put-role-policy \
+        --role-name $ROLE_NAME \
+        --policy-name S3BucketAccess \
+        --policy-document file:///tmp/s3-policy.json \
+        > /dev/null
+    
+    rm /tmp/s3-policy.json
+    
+    echo "  ✓ S3 bucket access policy updated for: $BUCKET_NAME"
 fi
 echo ""
 
@@ -335,6 +368,20 @@ echo ""
 echo "✓ Elastic Beanstalk environment created"
 echo ""
 
+echo "  Ensuring environment variables are persisted..."
+# Update environment variables to ensure they persist after initial creation
+aws elasticbeanstalk update-environment \
+    --application-name "$APP_NAME" \
+    --environment-name "$ENV_NAME" \
+    --option-settings \
+        Namespace=aws:elasticbeanstalk:application:environment,OptionName=S3_BUCKET_NAME,Value="$BUCKET_NAME" \
+        Namespace=aws:elasticbeanstalk:application:environment,OptionName=AWS_REGION,Value="$REGION" \
+        Namespace=aws:elasticbeanstalk:application:environment,OptionName=PYTHONUNBUFFERED,Value=1 \
+    > /dev/null 2>&1 || true
+
+echo "  ✓ Environment variables configured"
+echo ""
+
 # Wait for background process to complete
 echo "Waiting for security group configuration to complete..."
 wait $BG_PID 2>/dev/null || echo "  Security group monitor completed"
@@ -387,6 +434,25 @@ aws elasticbeanstalk wait environment-updated \
     2>/dev/null || sleep 60
 
 echo "✓ Environment is ready"
+echo ""
+
+echo "Step 10: Verifying environment variables..."
+echo "----------------------------------------------------------------------"
+
+# Verify environment variables are set
+ENV_VARS=$(aws elasticbeanstalk describe-configuration-settings \
+    --application-name "$APP_NAME" \
+    --environment-name "$ENV_NAME" \
+    --query 'ConfigurationSettings[0].OptionSettings[?Namespace==`aws:elasticbeanstalk:application:environment`]' \
+    --output json)
+
+S3_VAR=$(echo "$ENV_VARS" | grep -c "S3_BUCKET_NAME" || true)
+if [ "$S3_VAR" -gt 0 ]; then
+    echo "  ✓ S3_BUCKET_NAME environment variable is set"
+else
+    echo "  ⚠️  WARNING: S3_BUCKET_NAME not found in environment variables"
+fi
+
 echo ""
 
 # Get environment URL

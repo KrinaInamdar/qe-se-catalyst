@@ -553,14 +553,61 @@ aws iam delete-role --role-name task-lambda-execution-role
 
 ## 🆘 Troubleshooting Tips
 
-### Issue: Lambda function can't be invoked
+### ⚠️ COMMON ISSUES - Read This First!
+
+#### Issue: SQS messages not triggering Lambda (event source mapping disabled)
+**Symptoms**: SQS queue receives messages but Lambda function never executes, no CloudWatch logs
+**Root Cause**: Event source mapping exists but is in "Disabled" state
+**Solution**:
+```bash
+# Check if mapping exists and its state
+aws lambda list-event-source-mappings --function-name task-validator
+
+# If State is "Disabled", enable it:
+aws lambda update-event-source-mapping --uuid YOUR-UUID --enabled
+
+# Or delete and recreate:
+aws lambda delete-event-source-mapping --uuid YOUR-UUID
+aws lambda create-event-source-mapping \
+  --function-name task-validator \
+  --event-source-arn YOUR-SQS-ARN \
+  --batch-size 10 \
+  --enabled
+```
+
+#### Issue: Lambda triggered twice for each message (duplicate subscriptions)
+**Symptoms**: Two log streams created for single SNS message, function executes twice
+**Root Cause**: Multiple SNS subscriptions pointing to same Lambda function
+**Solution**:
+```bash
+# List all subscriptions for your SNS topic
+aws sns list-subscriptions-by-topic --topic-arn YOUR-TOPIC-ARN
+
+# If you see duplicates (same Endpoint, different SubscriptionArn), remove extras:
+aws sns unsubscribe --subscription-arn DUPLICATE-SUBSCRIPTION-ARN
+
+# Keep only one subscription per Lambda function
+```
+**Prevention**: Before creating a subscription, check if one already exists:
+```bash
+# Check existing subscriptions
+aws sns list-subscriptions-by-topic --topic-arn YOUR-TOPIC-ARN \
+  --query "Subscriptions[?Protocol=='lambda' && Endpoint=='YOUR-LAMBDA-ARN']"
+
+# Only create if none exist
+```
+
+#### Issue: Lambda function can't be invoked
 **Solution**: Check IAM role permissions and ensure role is attached to function
 
-### Issue: SNS notifications not received
-**Solution**: Confirm email subscription in your inbox
+#### Issue: SNS notifications not received
+**Solution**: Confirm email subscription in your inbox (check spam folder too!)
 
-### Issue: SQS messages not processed
-**Solution**: Verify Lambda trigger is configured and check CloudWatch logs for errors
+#### Issue: SQS messages not processed
+**Solution**: 
+1. Verify event source mapping is **enabled** (see first issue above)
+2. Check CloudWatch logs for errors
+3. Verify IAM role has SQS permissions
 
 ### Issue: "Unable to import module"  
 **Solution**: Check your zip file structure - Python file should be at root of zip
@@ -575,6 +622,7 @@ aws iam delete-role --role-name task-lambda-execution-role
 
 ## 📚 Helpful Resources
 
+- **⭐ [`COMMON_ISSUES.md`](COMMON_ISSUES.md)** - Quick fixes for most common problems
 - [AWS CLI Command Reference](https://docs.aws.amazon.com/cli/)
 - [Lambda Python Guide](https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html)
 - [SQS Integration with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
