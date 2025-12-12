@@ -62,27 +62,25 @@ echo "Invoking Order Processor Lambda"
 echo "======================================"
 echo ""
 
-# Create payload file (AWS Lambda invoke requires file for payload)
-cat > /tmp/test-order-payload.json << 'EOF'
-{
-  "customer_name": "Jane Smith",
-  "customer_id": "CUST-12345",
-  "items": [
-    {
-      "name": "Demo Product",
-      "quantity": 3,
-      "price": 49.99
-    }
-  ],
-  "total_amount": 149.97
-}
-EOF
+# Check if test-payload.json exists
+if [ ! -f "test-payload.json" ]; then
+    echo "❌ Error: test-payload.json not found in current directory"
+    echo ""
+    echo "Please create test-payload.json with the following format:"
+    echo '{'
+    echo '  "customer_name": "Jane Smith",'
+    echo '  "customer_id": "CUST-12345",'
+    echo '  "items": [{"name": "Demo Product", "quantity": 3, "price": 49.99}],'
+    echo '  "total_amount": 149.97'
+    echo '}'
+    exit 1
+fi
 
-echo "Sending order data..."
+echo "Sending order data from test-payload.json..."
 if aws lambda invoke \
     --function-name demo-order-processor \
     --cli-binary-format raw-in-base64-out \
-    --payload file:///tmp/test-order-payload.json \
+    --payload file://test-payload.json \
     --region $REGION \
     response.json > /dev/null 2>&1; then
     
@@ -97,13 +95,13 @@ if aws lambda invoke \
         echo "⚠️  Lambda returned an error. Check the logs for details."
     fi
     
-    rm -f response.json /tmp/test-order-payload.json
+    rm -f response.json
 else
     echo "❌ Failed to invoke Order Processor"
     echo ""
     echo "Error details:"
     cat response.json 2>/dev/null || echo "No response file created"
-    rm -f response.json /tmp/test-order-payload.json
+    rm -f response.json
     exit 1
 fi
 

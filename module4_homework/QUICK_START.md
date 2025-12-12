@@ -5,6 +5,7 @@
 module4_homework/
 ├── README.md                       # Main homework instructions
 ├── TESTING_GUIDE.md                # Testing examples
+├── COMMON_ISSUES.md                # ⭐ Troubleshooting guide (READ THIS!)
 ├── QUICK_START.md                  # This file
 ├── verify-homework.sh              # Verification script (bash)
 ├── verify-homework.ps1             # Verification script (PowerShell)
@@ -14,6 +15,9 @@ module4_homework/
     ├── task_validator.py           # Lambda function (INCOMPLETE - TODO)
     └── task_notifier.py            # Lambda function (INCOMPLETE - TODO)
 ```
+
+## ⚠️ IMPORTANT: Read This First!
+Before starting, review **`COMMON_ISSUES.md`** - it contains solutions to the most common problems students face (disabled event mappings, duplicate subscriptions, etc.).
 
 ## Quick Start Guide
 

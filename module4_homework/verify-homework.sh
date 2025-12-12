@@ -95,9 +95,16 @@ if [ $? -eq 0 ]; then
     check_pass "Lambda function 'task-validator' exists"
     
     # Check SQS trigger
-    EVENT_SOURCE=$(aws lambda list-event-source-mappings --function-name task-validator 2>/dev/null)
-    if [ -n "$EVENT_SOURCE" ]; then
-        check_pass "task-validator has SQS trigger configured"
+    EVENT_SOURCE=$(aws lambda list-event-source-mappings --function-name task-validator --query 'EventSourceMappings[0]' 2>/dev/null)
+    if [ -n "$EVENT_SOURCE" ] && [ "$EVENT_SOURCE" != "null" ]; then
+        # Check if enabled
+        MAPPING_STATE=$(aws lambda list-event-source-mappings --function-name task-validator --query 'EventSourceMappings[0].State' --output text 2>/dev/null)
+        if [ "$MAPPING_STATE" == "Enabled" ]; then
+            check_pass "task-validator has SQS trigger configured and ENABLED"
+        else
+            check_fail "task-validator SQS trigger exists but is DISABLED"
+            echo "  Run: aws lambda update-event-source-mapping --uuid \$(aws lambda list-event-source-mappings --function-name task-validator --query 'EventSourceMappings[0].UUID' --output text) --enabled"
+        fi
     else
         check_fail "task-validator missing SQS trigger"
     fi
@@ -108,6 +115,25 @@ fi
 LAMBDA_NOTIFIER=$(aws lambda get-function --function-name task-notifier 2>/dev/null)
 if [ $? -eq 0 ]; then
     check_pass "Lambda function 'task-notifier' exists"
+    
+    # Check for duplicate SNS subscriptions
+    if [ -n "$SNS_TOPICS" ]; then
+        NOTIFIER_ARN="arn:aws:lambda:us-east-1:$ACCOUNT_ID:function:task-notifier"
+        SUB_COUNT=$(aws sns list-subscriptions-by-topic --topic-arn "$SNS_TOPICS" \
+            --query "Subscriptions[?Protocol=='lambda' && Endpoint=='$NOTIFIER_ARN']" \
+            --output json | grep -c "SubscriptionArn" || echo "0")
+        
+        if [ "$SUB_COUNT" -eq 1 ]; then
+            check_pass "task-notifier has correct SNS subscription (no duplicates)"
+        elif [ "$SUB_COUNT" -gt 1 ]; then
+            check_warn "task-notifier has $SUB_COUNT duplicate subscriptions - Lambda will trigger multiple times!"
+            echo "  To fix, list subscriptions and remove extras:"
+            echo "  aws sns list-subscriptions-by-topic --topic-arn $SNS_TOPICS"
+            echo "  aws sns unsubscribe --subscription-arn DUPLICATE-ARN"
+        else
+            check_warn "task-notifier has no SNS subscription configured"
+        fi
+    fi
 else
     check_fail "Lambda function 'task-notifier' not found"
 fi
