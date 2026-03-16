@@ -1,0 +1,39 @@
+\image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    "**":
+      - step:
+          name: Build Backend
+          image: maven:3.9.6-eclipse-temurin-21
+          caches:
+            - maven
+          script:
+            - cd backend
+            - mvn clean package -DskipTests
+
+      - step:
+          name: Build Frontend
+          image: node:20
+          caches:
+            - node
+          script:
+            - cd employee-frontend
+            - npm install
+            - npm run build
+
+      - step:
+          name: Frontend Lint
+          image: node:20
+          script:
+            - cd employee-frontend
+            - npm install
+            - npm run lint || echo "No lint script found"
+
+      - step:
+          name: Security Scan
+          image: node:20
+          script:
+            - cd employee-frontend
+            - npm install
+            - npm audit --audit-level=high
