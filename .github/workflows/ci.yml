@@ -1,0 +1,63 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+
+jobs:
+
+  build-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build Backend
+        run: |
+          cd backend
+          mvn clean install
+
+      - name: Run OWASP Dependency Check
+        run: |
+         cd backend
+         mvn org.owasp:dependency-check-maven:check    
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run npm security audit
+        run: |
+          cd employee-frontend
+          npm audit --audit-level=high    
+
+      - name: Install Dependencies
+        run: |
+          cd employee-frontend
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd employee-frontend
+          npm run build
+
