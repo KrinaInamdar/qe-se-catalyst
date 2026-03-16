@@ -3,6 +3,12 @@ stages:
   - build
   - security
 
+# Cache speeds up builds
+cache:
+  paths:
+    - backend/.m2/repository
+    - employee-frontend/node_modules/
+
 # -------------------------
 # FRONTEND LINT
 # -------------------------
@@ -10,12 +16,11 @@ frontend-lint:
   stage: lint
   image: node:20
   script:
-    - echo "Running frontend lint check"
     - cd employee-frontend
     - npm install
-    - npm run lint || echo "Lint script not found - skipping"
-  only:
-    - branches
+    - npm run lint || echo "No lint script found"
+  rules:
+    - if: $CI_COMMIT_BRANCH
 
 # -------------------------
 # BACKEND BUILD
@@ -24,11 +29,13 @@ backend-build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-21
   script:
-    - echo "Building Spring Boot backend"
     - cd backend
     - mvn clean package -DskipTests
-  only:
-    - branches
+  artifacts:
+    paths:
+      - backend/target/*.jar
+  rules:
+    - if: $CI_COMMIT_BRANCH
 
 # -------------------------
 # FRONTEND BUILD
@@ -37,24 +44,25 @@ frontend-build:
   stage: build
   image: node:20
   script:
-    - echo "Building React frontend"
     - cd employee-frontend
     - npm install
     - npm run build
-  only:
-    - branches
+  artifacts:
+    paths:
+      - employee-frontend/build/
+  rules:
+    - if: $CI_COMMIT_BRANCH
 
 # -------------------------
 # SECURITY SCAN
 # -------------------------
-security-scan:
+dependency-security-scan:
   stage: security
   image: node:20
   script:
-    - echo "Running dependency security scan"
     - cd employee-frontend
     - npm install
     - npm audit --audit-level=high
   allow_failure: true
-  only:
-    - branches
+  rules:
+    - if: $CI_COMMIT_BRANCH
