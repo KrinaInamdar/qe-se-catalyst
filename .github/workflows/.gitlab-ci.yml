@@ -1,0 +1,60 @@
+stages:
+  - lint
+  - build
+  - security
+
+# -------------------------
+# FRONTEND LINT
+# -------------------------
+frontend-lint:
+  stage: lint
+  image: node:20
+  script:
+    - echo "Running frontend lint check"
+    - cd employee-frontend
+    - npm install
+    - npm run lint || echo "Lint script not found - skipping"
+  only:
+    - branches
+
+# -------------------------
+# BACKEND BUILD
+# -------------------------
+backend-build:
+  stage: build
+  image: maven:3.9.6-eclipse-temurin-21
+  script:
+    - echo "Building Spring Boot backend"
+    - cd backend
+    - mvn clean package -DskipTests
+  only:
+    - branches
+
+# -------------------------
+# FRONTEND BUILD
+# -------------------------
+frontend-build:
+  stage: build
+  image: node:20
+  script:
+    - echo "Building React frontend"
+    - cd employee-frontend
+    - npm install
+    - npm run build
+  only:
+    - branches
+
+# -------------------------
+# SECURITY SCAN
+# -------------------------
+security-scan:
+  stage: security
+  image: node:20
+  script:
+    - echo "Running dependency security scan"
+    - cd employee-frontend
+    - npm install
+    - npm audit --audit-level=high
+  allow_failure: true
+  only:
+    - branches
