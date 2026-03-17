@@ -1,0 +1,30 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
+:root { --bg:#f7f8fb; --card:#fff; --accent:#2d6cdf; }
+body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto; background:var(--bg); color:#222; }
+.container { max-width:1000px; margin:28px auto; background:var(--card); padding:18px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.add-btn { background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+.employee-table { width:100%; border-collapse:collapse; }
+.employee-table th, .employee-table td { padding:8px 12px; border-bottom:1px solid #eee; text-align:left; }
+.employee-table thead th { background:#fafafa; }
+.actions button { margin-right:6px; cursor:pointer; border:none; background:transparent; font-size:16px; }
+.modal { position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; }
+.form { background:#fff; padding:18px; border-radius:8px; width:360px; box-shadow:0 10px 30px rgba(0,0,0,0.15); }
+.form label { display:block; margin-bottom:8px; font-size:14px; }
+.form input { width:100%; padding:8px; margin-top:4px; box-sizing:border-box; }
+.form-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }
+.save { background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+.cancel { background:#eee; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
