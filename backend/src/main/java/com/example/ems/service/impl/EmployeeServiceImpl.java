@@ -6,17 +6,19 @@ import com.example.ems.exception.ResourceNotFoundException;
 import com.example.ems.mapper.EmployeeMapper;
 import com.example.ems.service.EmployeeService;
 import com.example.ems.repository.EmployeeRepository;
-
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeRepository employeeRepository;
+    //private final EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
     
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {

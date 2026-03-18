@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class EmployeeServiceImplTest {
@@ -32,7 +33,9 @@ class EmployeeServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        employee = new Employee(1L, "John", "Doe", "john@example.com", "1234567890", "Developer");
+        // FIX: assign to the class-level field, not a new local variable
+        employee = new Employee(1L, "John", "Doe", "john@example.com", "123", "Dev");
+
         employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
     }
 
@@ -80,10 +83,14 @@ class EmployeeServiceImplTest {
 
     @Test
     void testDeleteEmployee() {
-        doNothing().when(employeeRepository).deleteById(1L);
+        // FIX: mock findById so deleteEmployee() does not throw ResourceNotFoundException
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+
+        // FIX: mock delete() instead of deleteById()
+        doNothing().when(employeeRepository).delete(employee);
 
         employeeService.deleteEmployee(1L);
 
-        verify(employeeRepository).deleteById(1L);
+        verify(employeeRepository).delete(employee);
     }
 }

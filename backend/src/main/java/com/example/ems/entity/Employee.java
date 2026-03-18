@@ -1,32 +1,21 @@
 package com.example.ems.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-
-@Getter
-@Setter
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "employees")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-    @Column(name = "phone", nullable = false, unique = true)
-    private String phone;
-    @Column(name = "role", nullable = false)
-    private String role;
 
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String role;
 }
