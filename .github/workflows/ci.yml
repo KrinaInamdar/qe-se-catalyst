@@ -23,15 +23,20 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Run Backend Unit Tests
+        run: |
+          cd backend
+          mvn -B test
+
       - name: Build Backend
         run: |
           cd backend
-          mvn clean install
+          mvn -B clean install
 
       - name: Run OWASP Dependency Check
         run: |
-         cd backend
-         mvn org.owasp:dependency-check-maven:check    
+          cd backend
+          mvn -B org.owasp:dependency-check-maven:check
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -55,8 +60,14 @@ jobs:
           cd employee-frontend
           npm install
 
+      - name: Run Frontend Unit Tests
+        env:
+          CI: true
+        run: |
+          cd employee-frontend
+          npm test -- --watchAll=false
+
       - name: Build Frontend
         run: |
           cd employee-frontend
           npm run build
-
