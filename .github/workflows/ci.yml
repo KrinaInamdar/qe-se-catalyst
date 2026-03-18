@@ -33,10 +33,18 @@ jobs:
           cd backend
           mvn -B clean install
 
-      - name: Run OWASP Dependency Check
-        run: |
-          cd backend
-          mvn -B org.owasp:dependency-check-maven:check
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "employee-management"
+          path: "./backend"
+          format: "HTML"
+
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: backend/dependency-check-report.html
 
   build-frontend:
     runs-on: ubuntu-latest
