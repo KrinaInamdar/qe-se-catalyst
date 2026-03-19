@@ -10,10 +10,10 @@ on:
 
 jobs:
 
-  build-backend:
-   runs-on: ubuntu-latest
+ build-backend:
+  runs-on: ubuntu-latest
 
-   steps:
+  steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
@@ -36,8 +36,6 @@ jobs:
 
     - name: OWASP Dependency Check
       uses: dependency-check/Dependency-Check_Action@main
-      env:
-        JAVA_HOME: ${{ steps.setup-java.outputs.java-home }}
       with:
         project: "employee-management"
         path: "./backend"
@@ -51,7 +49,8 @@ jobs:
         path: backend/dependency-check-report.html
 
 
-  build-frontend:
+
+ build-frontend:
     runs-on: ubuntu-latest
 
     steps:
