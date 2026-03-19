@@ -37,19 +37,22 @@ jobs:
     - name: OWASP Dependency Check
       uses: dependency-check/Dependency-Check_Action@main
       env:
-        JAVA_HOME: ""       
-        JAVA_HOME_21_X64: ""
+        # Override the host's JAVA_HOME with the container's internal path
+        JAVA_HOME: /opt/jdk
       with:
         project: "employee-management"
         path: "./backend"
         format: "HTML"
+        # Optional: I noticed --noupdate was duplicated in your logs, 
+        # but one is fine here.
         args: "--noupdate"
 
     - name: Upload Dependency Check Report
       uses: actions/upload-artifact@v4
       with:
         name: dependency-check-report
-        path: backend/dependency-check-report.html
+        # Match the output directory defined in the OWASP step
+        path: reports/dependency-check-report.html
 
 
 
