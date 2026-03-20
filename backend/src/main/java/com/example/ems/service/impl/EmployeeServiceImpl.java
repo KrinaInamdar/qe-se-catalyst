@@ -6,20 +6,20 @@ import com.example.ems.exception.ResourceNotFoundException;
 import com.example.ems.mapper.EmployeeMapper;
 import com.example.ems.service.EmployeeService;
 import com.example.ems.repository.EmployeeRepository;
-import lombok.RequiredArgsConstructor;
+
+import lombok.AllArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor // Keep this one
 public class EmployeeServiceImpl implements EmployeeService {
-    //private final EmployeeRepository employeeRepository;
-    private EmployeeRepository employeeRepository;
-
     
+    private final EmployeeRepository employeeRepository; 
+
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
@@ -42,38 +42,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .collect(Collectors.toList());
     }
 
-  
+    @Override
+    public EmployeeDto updateEmployee(Long employeeId, EmployeeDto employeeDto) {
 
-//     @Override
-// public EmployeeDto updateEmployee(Long employeeId, EmployeeDto employeeDto) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found " + employeeId));
 
-//     Employee employee = employeeRepository.findById(employeeId)
-//             .orElseThrow(() -> new ResourceNotFoundException("Employee not found " + employeeId));
+        EmployeeMapper.updateEmployeeFromDto(employee, employeeDto);
 
-//     // update existing entity
-//     employee.setFirstName(employeeDto.getFirstName());
-//     employee.setLastName(employeeDto.getLastName());
-//     employee.setEmail(employeeDto.getEmail());
-//     employee.setPhone(employeeDto.getPhone());
-//     employee.setRole(employeeDto.getRole());
+        Employee savedEmployee = employeeRepository.save(employee);
 
-//     Employee savedEmployee = employeeRepository.save(employee);
-
-//     return EmployeeMapper.mapToEmployeeDto(savedEmployee);
-// }
-
-@Override
-public EmployeeDto updateEmployee(Long employeeId, EmployeeDto employeeDto) {
-
-    Employee employee = employeeRepository.findById(employeeId)
-            .orElseThrow(() -> new ResourceNotFoundException("Employee not found " + employeeId));
-
-    EmployeeMapper.updateEmployeeFromDto(employee, employeeDto);
-
-    Employee savedEmployee = employeeRepository.save(employee);
-
-    return EmployeeMapper.mapToEmployeeDto(savedEmployee);
-}
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
 
     @Override
     public void deleteEmployee(Long employeeId) {

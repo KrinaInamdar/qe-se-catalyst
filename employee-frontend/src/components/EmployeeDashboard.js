@@ -6,7 +6,7 @@ import {
   updateEmployee,
   deleteEmployee,
 } from "../services/api";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function EmployeeDashboard() {
   const [employees, setEmployees] = useState([]);
@@ -62,28 +62,34 @@ const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
     if (!window.confirm("Delete employee #" + id + "?")) return;
     try {
       await deleteEmployee(id);
+      setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       toast.success("Employee deleted");
-      load();
     } catch (err) {
       console.error("Delete error", err);
-      alert("Delete failed: " + (err.message || err));
-    }
+      toast.error("Delete failed: " + err.message);
+  }
   };
 
   const onSubmit = async (form) => {
-    try {
-      if (editing) {
-        await updateEmployee(editing.id, form);
-        toast.success("Employee updated!");
-      } else {
-        await createEmployee(form);
-        toast.success("Employee created!");
-      }
-    } catch (err) {
-      console.error("Save error", err);
-      toast.error("Save failed: " + (err.message || err));
+  try {
+    if (editing) {
+      const updatedData = await updateEmployee(editing.id, form);
+      setEmployees((prev) =>
+        prev.map((emp) => (emp.id === editing.id ? updatedData : emp))
+      );
+     toast.info("Employee updated successfully!");
+    } else {
+      const newData = await createEmployee(form);
+      setEmployees((prev) => [...prev, newData]);
+      toast.success("Employee created!");
     }
-  };
+    setShowForm(false);
+    setEditing(null);
+  } catch (err) {
+
+    throw err; 
+  }
+};
 
   return (
     <div className="container">
@@ -122,6 +128,7 @@ const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
               <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Email</th>
               <th>Phone</th>
               <th>Role</th>
               <th>Edit</th>
@@ -138,6 +145,7 @@ const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
                 <td>{e.id}</td>
                 <td>{e.firstName}</td>
                 <td>{e.lastName}</td>
+                <td>{e.email}</td>
                 <td>{e.phone || "-"}</td>
                 <td>{e.role || "-"}</td>
                 <td className="actions">
@@ -153,7 +161,7 @@ const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
           </tbody>
         </table>
       )}
-
+      <ToastContainer position="top-right" autoClose={3000} />
       {showForm && (
         <EmployeeForm
           initial={editing}
