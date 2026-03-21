@@ -6,15 +6,19 @@ A Spring Boot backend application for the SE Core Competency for QE project, fea
 
 # SE Core Competency for QE - Backend
 
-A Spring Boot backend application for the SE Core Competency for QE project, featuring a REST API for student management with H2 in-memory database.
+A Spring Boot backend application for the SE Core Competency for QE project, featuring a REST API for employee management with H2 in-memory database.
 
-## Features
+## Tech Stack
 
-- RESTful API for student management (CRUD operations)
-- Health and info endpoints for monitoring
-- H2 in-memory database with pre-populated sample data
-- Spring Boot Actuator for health, metrics, and info
-- Unit and integration tests for controllers and application context
+Java 21 (Amazon Corretto / Temurin)
+
+Spring Boot 3.x (Web, Data JPA)
+
+PostgreSQL (Relational Database)
+
+Lombok (Boilerplate reduction)
+
+Maven (Dependency Management)
 
 ```
 backend/
@@ -26,14 +30,14 @@ backend/
 │   │   │           └── demo/
 │   │   │               ├── DemoApplication.java          # Main Spring Boot application
 │   │   │               ├── controller/
-│   │   │               │   ├── HealthController.java     # Health & info endpoints
-│   │   │               │   └── StudentController.java    # Student CRUD operations
+│   │   │               │   ├    
+│   │   │               │   └── EmployeeController.java    # Employee CRUD operations
 │   │   │               ├── entity/
-│   │   │               │   └── Student.java              # Student JPA entity
+│   │   │               │   └── Employee.java              # Employee JPA entity
 │   │   │               └── repository/
-│   │   │                   └── StudentRepository.java    # JPA repository interface
+│   │   │                   └── EmployeeRepository.java    # JPA repository interface
 │   │   │               └── service/
-│   │   │                   └── StudentService.java       # Business logic for student operations
+│   │   │                   └── EmployeeService.java       # Business logic for Employee operations
 │   │   └── resources/
 │   │       ├── application.properties                    # Application configuration
 │   │       ├── schema.sql                               # Database schema

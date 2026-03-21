@@ -2,95 +2,105 @@ package com.example.ems.service;
 
 import com.example.ems.dto.EmployeeDto;
 import com.example.ems.entity.Employee;
-import com.example.ems.mapper.EmployeeMapper;
 import com.example.ems.repository.EmployeeRepository;
 import com.example.ems.service.impl.EmployeeServiceImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Optional;
+import java.util.List;
 
 class EmployeeServiceImplTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private EmployeeServiceImpl employeeService;
-
-    private Employee employee;
-    private EmployeeDto employeeDto;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        // FIX: assign to the class-level field, not a new local variable
-        employee = new Employee(1L, "John", "Doe", "john@example.com", "123", "Dev");
-
-        employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
     }
 
     @Test
     void testCreateEmployee() {
+        EmployeeDto dto = new EmployeeDto(null, "John", "Doe", "john@example.com", "1234567890", "USER", "password");
+        Employee employee = new Employee(null, "John", "Doe", "john@example.com", "1234567890", "USER",
+                "encryptedPassword");
+
+        when(passwordEncoder.encode(dto.getPassword())).thenReturn("encryptedPassword");
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
 
-        EmployeeDto saved = employeeService.createEmployee(employeeDto);
+        EmployeeDto result = employeeService.createEmployee(dto);
 
-        assertNotNull(saved);
-        assertEquals("John", saved.getFirstName());
+        assertThat(result.getEmail()).isEqualTo("john@example.com");
         verify(employeeRepository, times(1)).save(any(Employee.class));
     }
 
     @Test
     void testGetEmployeeById() {
+        Employee employee = new Employee(1L, "John", "Doe", "john@example.com", "1234567890", "USER", "password");
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
 
         EmployeeDto result = employeeService.getEmployeeById(1L);
 
-        assertEquals("John", result.getFirstName());
-        verify(employeeRepository).findById(1L);
+        assertThat(result.getEmail()).isEqualTo("john@example.com");
+        verify(employeeRepository, times(1)).findById(1L);
     }
 
     @Test
     void testGetAllEmployees() {
-        when(employeeRepository.findAll()).thenReturn(Arrays.asList(employee));
+        List<Employee> employees = List.of(
+                new Employee(1L, "John", "Doe", "john@example.com", "1234567890", "USER", "password"),
+                new Employee(2L, "Jane", "Doe", "jane@example.com", "0987654321", "USER", "password"));
+        when(employeeRepository.findAll()).thenReturn(employees);
 
-        var list = employeeService.getAllEmployees();
+        List<EmployeeDto> result = employeeService.getAllEmployees();
 
-        assertEquals(1, list.size());
-        verify(employeeRepository).findAll();
+        assertThat(result).hasSize(2);
+        verify(employeeRepository, times(1)).findAll();
     }
 
     @Test
     void testUpdateEmployee() {
-        when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
-        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
+        Employee existingEmployee = new Employee(1L, "John", "Doe", "john@example.com", "1234567890", "USER",
+                "password");
+        EmployeeDto dto = new EmployeeDto(1L, "John", "Doe", "john@example.com", "1234567890", "USER", "newpassword");
 
-        EmployeeDto updated = employeeService.updateEmployee(1L, employeeDto);
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(existingEmployee));
+        when(passwordEncoder.encode(dto.getPassword())).thenReturn("encryptedNewPassword");
+        when(employeeRepository.save(any(Employee.class))).thenReturn(existingEmployee);
 
-        assertEquals("John", updated.getFirstName());
-        verify(employeeRepository).save(any(Employee.class));
+        EmployeeDto result = employeeService.updateEmployee(1L, dto);
+
+        // Ensure the password was encoded and set correctly
+        assertThat(existingEmployee.getPassword()).isEqualTo("encryptedNewPassword");
+        verify(employeeRepository, times(1)).findById(1L);
+        verify(employeeRepository, times(1)).save(existingEmployee);
     }
 
     @Test
     void testDeleteEmployee() {
-        // FIX: mock findById so deleteEmployee() does not throw ResourceNotFoundException
+        Employee employee = new Employee(1L, "John", "Doe", "john@example.com", "1234567890", "USER", "password");
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
-
-        // FIX: mock delete() instead of deleteById()
         doNothing().when(employeeRepository).delete(employee);
 
         employeeService.deleteEmployee(1L);
 
-        verify(employeeRepository).delete(employee);
+        verify(employeeRepository, times(1)).findById(1L);
+        verify(employeeRepository, times(1)).delete(employee);
     }
+
 }

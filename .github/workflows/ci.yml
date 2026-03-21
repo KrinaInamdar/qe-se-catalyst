@@ -10,53 +10,59 @@ on:
 
 jobs:
 
- build-backend:
-  runs-on: ubuntu-latest
+  build-backend:
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Java
-      id: setup-java
-      uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: '21'
+      - name: Set up Java
+        id: setup-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
 
-    - name: Run Backend Unit Tests
-      run: |
-        cd backend
-        mvn -B test
+      - name: Run Backend Unit Tests
+        run: |
+          cd backend
+          mvn -B test jacoco:report
 
-    - name: Build Backend
-      run: |
-        cd backend
-        mvn -B clean install
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: backend/target/surefire-reports
 
-    - name: OWASP Dependency Check
-      uses: dependency-check/Dependency-Check_Action@main
-      env:
-        # Override the host's JAVA_HOME with the container's internal path
-        JAVA_HOME: /opt/jdk
-      with:
-        project: "employee-management"
-        path: "./backend"
-        format: "HTML"
-        # Optional: I noticed --noupdate was duplicated in your logs, 
-        # but one is fine here.
-        args: "--noupdate"
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/target/site/jacoco
 
-    - name: Upload Dependency Check Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: dependency-check-report
-        # Match the output directory defined in the OWASP step
-        path: reports/dependency-check-report.html
+      - name: Build Backend
+        run: |
+          cd backend
+          mvn -B clean install
 
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        env:
+          JAVA_HOME: /opt/jdk
+        with:
+          project: "employee-management"
+          path: "./backend"
+          format: "HTML"
+          args: "--noupdate"
 
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: reports/dependency-check-report.html
 
- build-frontend:
+  build-frontend:
     runs-on: ubuntu-latest
 
     steps:
