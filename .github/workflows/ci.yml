@@ -52,8 +52,8 @@ jobs:
           project: "employee-management"
           path: "./backend"
           format: "HTML"
-          # Use the environment variable from the setup-java step
-          args: >
+          out: "reports"
+          args: |-
             --failOnCVSS 7
             --enableRetired
 
@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: "./odc-reports" # Default output location
+          path: "reports"
 
   build-frontend:
     runs-on: ubuntu-latest
