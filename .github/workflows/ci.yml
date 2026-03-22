@@ -48,19 +48,20 @@ jobs:
 
       - name: OWASP Dependency Check
         uses: dependency-check/Dependency-Check_Action@main
-        env:
-          JAVA_HOME: /opt/jdk
         with:
           project: "employee-management"
           path: "./backend"
           format: "HTML"
-          args: "--noupdate"
+          # Use the environment variable from the setup-java step
+          args: >
+            --failOnCVSS 7
+            --enableRetired
 
       - name: Upload Dependency Check Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: reports/dependency-check-report.html
+          path: "./odc-reports" # Default output location
 
   build-frontend:
     runs-on: ubuntu-latest
