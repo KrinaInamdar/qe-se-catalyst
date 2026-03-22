@@ -7,6 +7,7 @@ import {
   deleteEmployee,
 } from "../services/api";
 import { ToastContainer, toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
 
 export default function EmployeeDashboard() {
   const [employees, setEmployees] = useState([]);
@@ -16,6 +17,7 @@ export default function EmployeeDashboard() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 5;
+  const { logout } = useAuth();
 
 
 
@@ -95,9 +97,14 @@ const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
     <div className="container">
       <header>
         <h1>Employee Management Dashboard</h1>
-        <button className="add-btn" onClick={onAdd}>
-          + Add Employee
-        </button>
+        <div className="header-actions">
+          <button className="add-btn" onClick={onAdd}>
+            + Add Employee
+          </button>
+          <button className="logout-btn" onClick={logout}>
+            Logout
+          </button>
+        </div>
       </header>
       <div className="toolbar">
         <input
