@@ -1,21 +1,25 @@
 package com.example.ems.config;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class SecurityConfigurationTest {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // No @SpringBootTest, no @Autowired. Just pure Java.
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Test
     void testPasswordEncoder() {
-        String encoded = passwordEncoder.encode("password");
-        assertThat(encoded).isNotNull();
+        String rawPassword = "password123";
+        
+        // Requirement: Hashed Password (Never store in plain text)
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        
+        assertNotNull(encodedPassword);
+        assertNotEquals(rawPassword, encodedPassword); // Verify it is hashed
+        assertTrue(passwordEncoder.matches(rawPassword, encodedPassword)); // Verify it works
     }
 }
