@@ -4,7 +4,7 @@ import { login as apiLogin } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Loader2, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Loader2 } from 'lucide-react';
 import AbstractCanvas from './AbstractCanvas';
 
 export default function Login() {

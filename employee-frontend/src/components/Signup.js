@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { createEmployee } from '../services/api';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Loader2, ArrowLeft, User } from 'lucide-react';
+import { Mail, Lock, Loader2, User } from 'lucide-react';
 import AbstractCanvas from './AbstractCanvas';
 
 const InputField = ({ label, icon: Icon, type, field, placeholder, formData, setFormData, loading }) => (
