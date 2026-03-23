@@ -16,17 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.ems.dto.LoginRequest;
-
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:5173" })
 @RestController
 @RequestMapping("/api/employees")
 @AllArgsConstructor
@@ -35,17 +29,25 @@ public class EmployeeController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest, jakarta.servlet.http.HttpServletRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(),
                             loginRequest.getPassword()));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            org.springframework.security.core.context.SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authentication);
+            
+            // In Spring Security 6, we MUST explicitly save the context to the session
+            jakarta.servlet.http.HttpSession session = request.getSession(true);
+            session.setAttribute(org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+
             return ResponseEntity.ok("User logged in successfully");
-        } catch (BadCredentialsException e) {
+        } catch (org.springframework.security.core.AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Login failed due to a server error: " + e.getMessage());
         }
     }
 

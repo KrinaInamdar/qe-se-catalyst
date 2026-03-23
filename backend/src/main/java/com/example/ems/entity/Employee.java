@@ -25,6 +25,6 @@ public class Employee {
     private String phone;
     private String role;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 }

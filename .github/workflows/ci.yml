@@ -92,7 +92,7 @@ jobs:
           CI: true
         run: |
           cd employee-frontend
-          npm test -- --watchAll=false
+          npm test -- --watchAll=false --coverage
 
       - name: Build Frontend
         run: |

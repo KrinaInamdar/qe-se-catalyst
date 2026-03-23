@@ -7,6 +7,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import './index.css';
 import "react-toastify/dist/ReactToastify.css";
 
+import { ToastContainer } from 'react-toastify';
+
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -17,6 +19,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} limit={1} theme="dark" />
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />

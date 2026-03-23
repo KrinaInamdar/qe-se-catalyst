@@ -1,0 +1,2109 @@
+
+> employee-frontend@0.1.0 test
+> react-scripts test --watchAll=false --coverage --watchAll=false
+
+PASS src/components/EmployeeForm.test.js
+FAIL src/components/Login.test.js
+  ● Console
+
+    console.warn
+      ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+      17 |
+      18 | const renderWithRouter = (ui) => {
+    > 19 |   return render(
+         |                ^
+      20 |     <AuthProvider>
+      21 |       <BrowserRouter>{ui}</BrowserRouter>
+      22 |     </AuthProvider>
+
+      at warnOnce (node_modules/react-router/lib/deprecations.ts:9:13)
+      at logDeprecation (node_modules/react-router/lib/deprecations.ts:14:3)
+      at Object.logV6DeprecationWarnings [as UNSAFE_logV6DeprecationWarnings] (node_modules/react-router/lib/deprecations.ts:26:5)
+      at node_modules/react-router-dom/index.tsx:816:25
+      at Object.react_stack_bottom_frame (node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at commitHookEffectListMount (node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+      at commitHookPassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15519:11)
+      at flushPassiveEffects (node_modules/react-dom/cjs/react-dom-client.development.js:18432:9)
+      at node_modules/react-dom/cjs/react-dom-client.development.js:17923:15
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:189:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:291:10)
+      at renderWithRouter (src/components/Login.test.js:19:16)
+      at Object.<anonymous> (src/components/Login.test.js:32:5)
+
+    console.warn
+      ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+      17 |
+      18 | const renderWithRouter = (ui) => {
+    > 19 |   return render(
+         |                ^
+      20 |     <AuthProvider>
+      21 |       <BrowserRouter>{ui}</BrowserRouter>
+      22 |     </AuthProvider>
+
+      at warnOnce (node_modules/react-router/lib/deprecations.ts:9:13)
+      at logDeprecation (node_modules/react-router/lib/deprecations.ts:14:3)
+      at Object.logV6DeprecationWarnings [as UNSAFE_logV6DeprecationWarnings] (node_modules/react-router/lib/deprecations.ts:37:5)
+      at node_modules/react-router-dom/index.tsx:816:25
+      at Object.react_stack_bottom_frame (node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at commitHookEffectListMount (node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+      at commitHookPassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15519:11)
+      at flushPassiveEffects (node_modules/react-dom/cjs/react-dom-client.development.js:18432:9)
+      at node_modules/react-dom/cjs/react-dom-client.development.js:17923:15
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:189:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:291:10)
+      at renderWithRouter (src/components/Login.test.js:19:16)
+      at Object.<anonymous> (src/components/Login.test.js:32:5)
+
+    console.error
+      An update to AuthProvider inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+       9 |
+      10 |   const login = () => {
+    > 11 |     setIsAuthenticated(true);
+         |     ^
+      12 |     localStorage.setItem('auth', 'true');
+      13 |   };
+      14 |
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setIsAuthenticated (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at login (src/context/AuthContext.js:11:5)
+      at handleSubmit (src/components/Login.js:26:7)
+
+    console.error
+      An update to BrowserRouter inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      26 |       login();
+      27 |       toast.success('Welcome back!');
+    > 28 |       navigate('/dashboard');
+         |       ^
+      29 |     } catch (err) {
+      30 |       toast.error(err.message || 'Invalid credentials');
+      31 |     } finally {
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setStateImpl (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at listener (node_modules/react-router-dom/index.tsx:809:11)
+      at push (node_modules/@remix-run/router/history.ts:664:7)
+      at navigate (node_modules/react-router/lib/hooks.tsx:243:62)
+      at handleSubmit (src/components/Login.js:28:7)
+
+    console.error
+      An update to Login inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      30 |       toast.error(err.message || 'Invalid credentials');
+      31 |     } finally {
+    > 32 |       setLoading(false);
+         |       ^
+      33 |     }
+      34 |   };
+      35 |
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setLoading (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at handleSubmit (src/components/Login.js:32:7)
+
+  ● Login Component › calls API and navigates on successful login
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name `/sign in/i`
+
+    Here are the accessible roles:
+
+      heading:
+
+      Name "Welcome Back":
+      [36m<h2[39m
+        [33mstyle[39m=[32m"font-size: 2rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 0.5rem; letter-spacing: -0.02em;"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      paragraph:
+
+      Name "":
+      [36m<p[39m
+        [33mstyle[39m=[32m"color: rgb(148, 163, 184); font-size: 0.95rem; margin-bottom: 2.5rem;"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<p[39m
+        [33mstyle[39m=[32m"margin-top: 2rem; font-size: 0.9rem; color: rgb(148, 163, 184);"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      textbox:
+
+      Name "Email Address":
+      [36m<input[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mid[39m=[32m"email"[39m
+        [33mplaceholder[39m=[32m"hello@catalyst.hr"[39m
+        [33mrequired[39m=[32m""[39m
+        [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+        [33mtype[39m=[32m"email"[39m
+        [33mvalue[39m=[32m"test@example.com"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "":
+      [36m<button[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mstyle[39m=[32m"margin-top: 1rem; width: 100%; padding: 0.8rem; color: rgb(255, 255, 255); border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 0.5rem; opacity: 0.7; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(59,130,246,0.39);"[39m
+        [33mtype[39m=[32m"submit"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      link:
+
+      Name "Create an account":
+      [36m<a[39m
+        [33mhref[39m=[32m"/signup"[39m
+        [33mstyle[39m=[32m"color: rgb(96, 165, 250); text-decoration: none; font-weight: 500;"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mdata-testid[39m=[32m"abstract-canvas-mock"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"width: 100%; max-width: 420px; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); z-index: 10; text-align: center; opacity: 0; transform: translateY(20px) scale(0.95);"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mstyle[39m=[32m"font-size: 2rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 0.5rem; letter-spacing: -0.02em;"[39m
+            [36m>[39m
+              [0mWelcome Back[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mstyle[39m=[32m"color: rgb(148, 163, 184); font-size: 0.95rem; margin-bottom: 2.5rem;"[39m
+            [36m>[39m
+              [0mSign in to Catalyst[0m
+            [36m</p>[39m
+            [36m<form[39m
+              [33mstyle[39m=[32m"display: flex; flex-direction: column; gap: 1.25rem; text-align: left;"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"email"[39m
+                  [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                [36m>[39m
+                  [0mEmail Address[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"position: relative;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-mail"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"#64748b"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"[39m
+                    [36m/>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"16"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"20"[39m
+                      [33mx[39m=[32m"2"[39m
+                      [33my[39m=[32m"4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mdisabled[39m=[32m""[39m
+                    [33mid[39m=[32m"email"[39m
+                    [33mplaceholder[39m=[32m"hello@catalyst.hr"[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                    [33mtype[39m=[32m"email"[39m
+                    [33mvalue[39m=[32m"test@example.com"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"password"[39m
+                  [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                [36m>[39m
+                  [0mPassword[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"position: relative;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-lock"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"#64748b"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"11"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mry[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mx[39m=[32m"3"[39m
+                      [33my[39m=[32m"11"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mdisabled[39m=[32m""[39m
+                    [33mid[39m=[32m"password"[39m
+                    [33mplaceholder[39m=[32m"••••••••"[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                    [33mtype[39m=[32m"password"[39m
+                    [33mvalue[39m=[32m"password123"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mstyle[39m=[32m"margin-top: 1rem; width: 100%; padding: 0.8rem; color: rgb(255, 255, 255); border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 0.5rem; opacity: 0.7; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(59,130,246,0.39);"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-loader-circle spinner"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M21 12a9 9 0 1 1-6.219-8.56"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</form>[39m
+            [36m<p[39m
+              [33mstyle[39m=[32m"margin-top: 2rem; font-size: 0.9rem; color: rgb(148, 163, 184);"[39m
+            [36m>[39m
+              [0mNew to Catalyst? [0m
+              [36m<a[39m
+                [33mhref[39m=[32m"/signup"[39m
+                [33mstyle[39m=[32m"color: rgb(96, 165, 250); text-decoration: none; font-weight: 500;"[39m
+              [36m>[39m
+                [0mCreate an account[0m
+              [36m</a>[39m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      59 |
+      60 |     expect(submitBtn).toBeDisabled();
+    > 61 |     expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+         |                   ^
+      62 |
+      63 |     await waitFor(() => {
+      64 |       expect(api.login).toHaveBeenCalledWith('test@example.com', 'password123');
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/components/Login.test.js:61:19)
+
+FAIL src/components/Signup.test.js
+  ● Console
+
+    console.warn
+      ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+      15 | }));
+      16 |
+    > 17 | const renderWithRouter = (ui) => render(<BrowserRouter>{ui}</BrowserRouter>);
+         |                                        ^
+      18 |
+      19 | describe('Signup Component', () => {
+      20 |   beforeEach(() => {
+
+      at warnOnce (node_modules/react-router/lib/deprecations.ts:9:13)
+      at logDeprecation (node_modules/react-router/lib/deprecations.ts:14:3)
+      at Object.logV6DeprecationWarnings [as UNSAFE_logV6DeprecationWarnings] (node_modules/react-router/lib/deprecations.ts:26:5)
+      at node_modules/react-router-dom/index.tsx:816:25
+      at Object.react_stack_bottom_frame (node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at commitHookEffectListMount (node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+      at commitHookPassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15519:11)
+      at flushPassiveEffects (node_modules/react-dom/cjs/react-dom-client.development.js:18432:9)
+      at node_modules/react-dom/cjs/react-dom-client.development.js:17923:15
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:189:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:291:10)
+      at renderWithRouter (src/components/Signup.test.js:17:40)
+      at Object.<anonymous> (src/components/Signup.test.js:25:5)
+
+    console.warn
+      ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+      15 | }));
+      16 |
+    > 17 | const renderWithRouter = (ui) => render(<BrowserRouter>{ui}</BrowserRouter>);
+         |                                        ^
+      18 |
+      19 | describe('Signup Component', () => {
+      20 |   beforeEach(() => {
+
+      at warnOnce (node_modules/react-router/lib/deprecations.ts:9:13)
+      at logDeprecation (node_modules/react-router/lib/deprecations.ts:14:3)
+      at Object.logV6DeprecationWarnings [as UNSAFE_logV6DeprecationWarnings] (node_modules/react-router/lib/deprecations.ts:37:5)
+      at node_modules/react-router-dom/index.tsx:816:25
+      at Object.react_stack_bottom_frame (node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at commitHookEffectListMount (node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+      at commitHookPassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+      at commitPassiveMountOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:15519:11)
+      at flushPassiveEffects (node_modules/react-dom/cjs/react-dom-client.development.js:18432:9)
+      at node_modules/react-dom/cjs/react-dom-client.development.js:17923:15
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:189:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:291:10)
+      at renderWithRouter (src/components/Signup.test.js:17:40)
+      at Object.<anonymous> (src/components/Signup.test.js:25:5)
+
+    console.error
+      An update to BrowserRouter inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      43 |       await createEmployee(formData);
+      44 |       toast.success('Account created successfully! Please sign in.');
+    > 45 |       navigate('/login');
+         |       ^
+      46 |     } catch (err) {
+      47 |       toast.error(err.message || 'Creation failed');
+      48 |     } finally {
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setStateImpl (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at listener (node_modules/react-router-dom/index.tsx:809:11)
+      at push (node_modules/@remix-run/router/history.ts:664:7)
+      at navigate (node_modules/react-router/lib/hooks.tsx:243:62)
+      at handleCreate (src/components/Signup.js:45:7)
+
+    console.error
+      An update to Signup inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      47 |       toast.error(err.message || 'Creation failed');
+      48 |     } finally {
+    > 49 |       setLoading(false);
+         |       ^
+      50 |     }
+      51 |   };
+      52 |
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setLoading (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at handleCreate (src/components/Signup.js:49:7)
+
+  ● Signup Component › submits successfully
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name `/sign up/i`
+
+    Here are the accessible roles:
+
+      heading:
+
+      Name "Create Account":
+      [36m<h2[39m
+        [33mstyle[39m=[32m"font-size: 2rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 0.5rem; letter-spacing: -0.02em;"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      paragraph:
+
+      Name "":
+      [36m<p[39m
+        [33mstyle[39m=[32m"color: rgb(148, 163, 184); font-size: 0.95rem; margin-bottom: 2.5rem;"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<p[39m
+        [33mstyle[39m=[32m"margin-top: 2rem; font-size: 0.9rem; color: rgb(148, 163, 184);"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      textbox:
+
+      Name "First Name *":
+      [36m<input[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mid[39m=[32m"firstName"[39m
+        [33mplaceholder[39m=[32m"John"[39m
+        [33mrequired[39m=[32m""[39m
+        [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+        [33mtype[39m=[32m"text"[39m
+        [33mvalue[39m=[32m"John"[39m
+      [36m/>[39m
+
+      Name "Last Name *":
+      [36m<input[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mid[39m=[32m"lastName"[39m
+        [33mplaceholder[39m=[32m"Doe"[39m
+        [33mrequired[39m=[32m""[39m
+        [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+        [33mtype[39m=[32m"text"[39m
+        [33mvalue[39m=[32m"Doe"[39m
+      [36m/>[39m
+
+      Name "Email Address *":
+      [36m<input[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mid[39m=[32m"email"[39m
+        [33mplaceholder[39m=[32m"john.doe@catalyst.hr"[39m
+        [33mrequired[39m=[32m""[39m
+        [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+        [33mtype[39m=[32m"email"[39m
+        [33mvalue[39m=[32m"john@doe.com"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "":
+      [36m<button[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mstyle[39m=[32m"margin-top: 1.5rem; width: 100%; padding: 0.8rem; color: rgb(255, 255, 255); border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 0.5rem; opacity: 0.7; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(59,130,246,0.39);"[39m
+        [33mtype[39m=[32m"submit"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      link:
+
+      Name "Sign in":
+      [36m<a[39m
+        [33mhref[39m=[32m"/login"[39m
+        [33mstyle[39m=[32m"color: rgb(96, 165, 250); text-decoration: none; font-weight: 500;"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mdata-testid[39m=[32m"abstract-canvas-mock"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"width: 100%; max-width: 500px; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); z-index: 10; text-align: center; opacity: 0; transform: translateY(20px) scale(0.95);"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mstyle[39m=[32m"font-size: 2rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 0.5rem; letter-spacing: -0.02em;"[39m
+            [36m>[39m
+              [0mCreate Account[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mstyle[39m=[32m"color: rgb(148, 163, 184); font-size: 0.95rem; margin-bottom: 2.5rem;"[39m
+            [36m>[39m
+              [0mCreate your Catalyst account[0m
+            [36m</p>[39m
+            [36m<form[39m
+              [33mstyle[39m=[32m"display: flex; flex-direction: column; gap: 1.25rem; text-align: left;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"display: flex; gap: 1rem; flex-wrap: wrap;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"flex: 1; min-width: 200px;"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mfor[39m=[32m"firstName"[39m
+                    [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                  [36m>[39m
+                    [0mFirst Name *[0m
+                  [36m</label>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"position: relative;"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-user"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"#64748b"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"[39m
+                      [36m/>[39m
+                      [36m<circle[39m
+                        [33mcx[39m=[32m"12"[39m
+                        [33mcy[39m=[32m"7"[39m
+                        [33mr[39m=[32m"4"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                    [36m<input[39m
+                      [33mdisabled[39m=[32m""[39m
+                      [33mid[39m=[32m"firstName"[39m
+                      [33mplaceholder[39m=[32m"John"[39m
+                      [33mrequired[39m=[32m""[39m
+                      [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m"John"[39m
+                    [36m/>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"flex: 1; min-width: 200px;"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mfor[39m=[32m"lastName"[39m
+                    [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                  [36m>[39m
+                    [0mLast Name *[0m
+                  [36m</label>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"position: relative;"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-user"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"#64748b"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"[39m
+                      [36m/>[39m
+                      [36m<circle[39m
+                        [33mcx[39m=[32m"12"[39m
+                        [33mcy[39m=[32m"7"[39m
+                        [33mr[39m=[32m"4"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                    [36m<input[39m
+                      [33mdisabled[39m=[32m""[39m
+                      [33mid[39m=[32m"lastName"[39m
+                      [33mplaceholder[39m=[32m"Doe"[39m
+                      [33mrequired[39m=[32m""[39m
+                      [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m"Doe"[39m
+                    [36m/>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"flex: 1; min-width: 200px;"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"email"[39m
+                  [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                [36m>[39m
+                  [0mEmail Address *[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"position: relative;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-mail"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"#64748b"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"[39m
+                    [36m/>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"16"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"20"[39m
+                      [33mx[39m=[32m"2"[39m
+                      [33my[39m=[32m"4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mdisabled[39m=[32m""[39m
+                    [33mid[39m=[32m"email"[39m
+                    [33mplaceholder[39m=[32m"john.doe@catalyst.hr"[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                    [33mtype[39m=[32m"email"[39m
+                    [33mvalue[39m=[32m"john@doe.com"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"flex: 1; min-width: 200px;"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"password"[39m
+                  [33mstyle[39m=[32m"display: block; font-size: 0.85rem; font-weight: 500; color: rgb(226, 232, 240); margin-bottom: 0.5rem;"[39m
+                [36m>[39m
+                  [0mPassword *[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"position: relative;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-lock"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"#64748b"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"11"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mry[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mx[39m=[32m"3"[39m
+                      [33my[39m=[32m"11"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mdisabled[39m=[32m""[39m
+                    [33mid[39m=[32m"password"[39m
+                    [33mplaceholder[39m=[32m"Create a strong password"[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mstyle[39m=[32m"width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"[39m
+                    [33mtype[39m=[32m"password"[39m
+                    [33mvalue[39m=[32m"password123"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mstyle[39m=[32m"margin-top: 1.5rem; width: 100%; padding: 0.8rem; color: rgb(255, 255, 255); border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 0.5rem; opacity: 0.7; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(59,130,246,0.39);"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-loader-circle spinner"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M21 12a9 9 0 1 1-6.219-8.56"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</form>[39m
+            [36m<p[39m
+              [33mstyle[39m=[32m"margin-top: 2rem; font-size: 0.9rem; color: rgb(148, 163, 184);"[39m
+            [36m>[39m
+              [0mAlready integrated? [0m
+              [36m<a[39m
+                [33mhref[39m=[32m"/login"[39m
+                [33mstyle[39m=[32m"color: rgb(96, 165, 250); text-decoration: none; font-weight: 500;"[39m
+              [36m>[39m
+                [0mSign in[0m
+              [36m</a>[39m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      44 |     
+      45 |     fireEvent.click(screen.getByRole('button', { name: /sign up/i }));
+    > 46 |     expect(screen.getByRole('button', { name: /sign up/i })).toBeDisabled();
+         |                   ^
+      47 |
+      48 |     await waitFor(() => {
+      49 |       expect(api.createEmployee).toHaveBeenCalledWith({
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/components/Signup.test.js:46:19)
+
+FAIL src/components/EmployeeDashboard.test.js (6.939 s)
+  ● Console
+
+    console.error
+      An update to EmployeeDashboard inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      19 |     try {
+      20 |       const data = await getEmployees();
+    > 21 |       setEmployees(data || []);
+         |       ^
+      22 |     } catch (err) {
+      23 |       console.error("Load error", err);
+      24 |       if (err.message?.includes('401') || err.message?.includes('403') || err.message?.includes('Unauthorized')) {
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setEmployees (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at load (src/components/EmployeeDashboard.js:21:7)
+
+    console.error
+      An update to EmployeeDashboard inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      29 |       }
+      30 |     } finally {
+    > 31 |       setLoading(false);
+         |       ^
+      32 |     }
+      33 |   };
+      34 |
+
+      at node_modules/react-dom/cjs/react-dom-client.development.js:18758:19
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom-client.development.js:18757:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom-client.development.js:16409:11)
+      at dispatchSetStateInternal (node_modules/react-dom/cjs/react-dom-client.development.js:9170:13)
+      at setLoading (node_modules/react-dom/cjs/react-dom-client.development.js:9127:7)
+      at load (src/components/EmployeeDashboard.js:31:7)
+
+  ● EmployeeDashboard Component › renders dashboard and loads employees
+
+    TestingLibraryElementError: Unable to find an element with the text: Employee Management Dashboard. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [0m Add Employee[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; min-height: 400px; display: flex; flex-direction: column;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; justify-content: center; flex: 1; color: rgb(148, 163, 184); gap: 1rem;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"spinner"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-search"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                    [36m/>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"11"[39m
+                      [33mcy[39m=[32m"11"[39m
+                      [33mr[39m=[32m"8"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</div>[39m
+                [0m Parsing data sets...[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</main>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      42 |     render(<EmployeeDashboard />);
+      43 |     
+    > 44 |     expect(screen.getByText('Employee Management Dashboard')).toBeInTheDocument();
+         |                   ^
+      45 |     expect(screen.getByText('Loading...')).toBeInTheDocument();
+      46 |
+      47 |     await waitFor(() => {
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByText (node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:44:19)
+
+  ● EmployeeDashboard Component › handles deleting an employee
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      57 |     render(<EmployeeDashboard />);
+      58 |     
+    > 59 |     await waitFor(() => {
+         |                  ^
+      60 |       expect(screen.getByText('John')).toBeInTheDocument();
+      61 |     });
+      62 |
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:59:18)
+
+  ● EmployeeDashboard Component › does not delete if confirm is cancelled
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      75 |     render(<EmployeeDashboard />);
+      76 |     
+    > 77 |     await waitFor(() => {
+         |                  ^
+      78 |       expect(screen.getByText('John')).toBeInTheDocument();
+      79 |     });
+      80 |
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:77:18)
+
+  ● EmployeeDashboard Component › opens add employee form and creates employee
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      90 |     
+      91 |     // Wait for initial load
+    > 92 |     await waitFor(() => expect(screen.getByText('John')).toBeInTheDocument());
+         |                  ^
+      93 |
+      94 |     // Click Add Employee
+      95 |     fireEvent.click(screen.getByText('+ Add Employee'));
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:92:18)
+
+  ● EmployeeDashboard Component › opens edit form and updates employee
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      116 |     render(<EmployeeDashboard />);
+      117 |     
+    > 118 |     await waitFor(() => expect(screen.getByText('John')).toBeInTheDocument());
+          |                  ^
+      119 |
+      120 |     const editBtns = screen.getAllByRole('button', { name: /✏️/i });
+      121 |     fireEvent.click(editBtns[0]); // Edit John
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:118:18)
+
+  ● EmployeeDashboard Component › handles search filtering
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      135 |   test('handles search filtering', async () => {
+      136 |     render(<EmployeeDashboard />);
+    > 137 |     await waitFor(() => expect(screen.getByText('John')).toBeInTheDocument());
+          |                  ^
+      138 |
+      139 |     const searchInput = screen.getByPlaceholderText('Search employee...');
+      140 |     fireEvent.change(searchInput, { target: { value: 'Jane' } });
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:137:18)
+
+  ● EmployeeDashboard Component › handles logout button
+
+    Unable to find an element with the text: John. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"min-height: 100vh; color: rgb(255, 255, 255); font-family: Inter, sans-serif; padding: 2rem;"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33mstyle[39m=[32m"background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"padding: 0.6rem; border-radius: 12px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-users"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"#fff"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M16 3.128a4 4 0 0 1 0 7.744"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M22 21v-2a4 4 0 0 0-3-3.87"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"9"[39m
+                    [33mcy[39m=[32m"7"[39m
+                    [33mr[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<h1[39m
+                [33mstyle[39m=[32m"font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0px;"[39m
+              [36m>[39m
+                [0mEmployee Dashboard[0m
+              [36m</h1>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-log-out"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m16 17 5-5-5-5"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 12H9"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m Logout[0m
+            [36m</button>[39m
+          [36m</nav>[39m
+          [36m<main[39m
+            [33mstyle[39m=[32m"max-width: 1400px; margin: 0px auto; display: flex; flex-direction: column; gap: 2rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"position: relative; width: 300px;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"#94a3b8"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mstyle[39m=[32m"position: absolute; top: 50%; transform: translateY(-50%); left: 1rem;"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mplaceholder[39m=[32m"Search directory..."[39m
+                  [33mstyle[39m=[32m"width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; color: rgb(255, 255, 255); font-size: 0.95rem; outline: none; transition: all 0.2s;"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mstyle[39m=[32m"display: flex; align-items: center; gap: 0.5rem; background: rgb(59, 130, 246); color: rgb(255, 255, 255); padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); transition: transform 0.2s;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+               ...
+
+      146 |   test('handles logout button', async () => {
+      147 |     render(<EmployeeDashboard />);
+    > 148 |     await waitFor(() => expect(screen.getByText('John')).toBeInTheDocument());
+          |                  ^
+      149 |
+      150 |     fireEvent.click(screen.getByText('Logout'));
+      151 |     expect(mockAuthLogout).toHaveBeenCalled();
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at Object.<anonymous> (src/components/EmployeeDashboard.test.js:148:18)
+
+-----------------------|---------|----------|---------|---------|----------------------------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                      
+-----------------------|---------|----------|---------|---------|----------------------------------------
+All files              |      50 |    59.04 |   34.24 |   50.26 |                                        
+ src                   |       0 |        0 |       0 |       0 |                                        
+  App.js               |       0 |        0 |       0 |       0 | 12-19                                  
+  index.js             |       0 |      100 |     100 |       0 | 7-10                                   
+  reportWebVitals.js   |       0 |        0 |       0 |       0 | 1-8                                    
+ src/components        |   59.06 |    64.51 |   36.84 |   59.57 |                                        
+  AbstractCanvas.js    |       0 |      100 |       0 |       0 | 6-34                                   
+  EmployeeDashboard.js |   33.87 |    28.12 |   19.23 |    36.2 | 23-28,41-49,53-59,65-66,90-119,156-204 
+  EmployeeForm.js      |   78.78 |    77.14 |   53.84 |   76.66 | 19-20,68,86-119                        
+  Login.js             |      84 |    91.66 |      50 |      84 | 63-64,81-82                            
+  Signup.js            |    90.9 |    92.85 |   71.42 |   90.47 | 23-24                                  
+ src/context           |   84.61 |      100 |      80 |   83.33 |                                        
+  AuthContext.js       |   84.61 |      100 |      80 |   83.33 | 16-17                                  
+ src/services          |    8.69 |    33.33 |       0 |    9.09 |                                        
+  api.js               |    8.69 |    33.33 |       0 |    9.09 | 5-63                                   
+-----------------------|---------|----------|---------|---------|----------------------------------------
+Test Suites: 3 failed, 1 passed, 4 total
+Tests:       9 failed, 11 passed, 20 total
+Snapshots:   0 total
+Time:        8.267 s
+Ran all test suites.
